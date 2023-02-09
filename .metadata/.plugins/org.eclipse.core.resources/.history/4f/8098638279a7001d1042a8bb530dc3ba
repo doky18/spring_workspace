@@ -1,0 +1,5 @@
+package com.edu.springmvc1.controller;
+
+public class BoardController {
+
+}

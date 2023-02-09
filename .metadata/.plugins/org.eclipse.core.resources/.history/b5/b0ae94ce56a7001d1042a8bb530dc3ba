@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+		<!-- 이 어플리케이션에서 사용될 모든~~ 객체들의 명단을 적자
+			   여기에 적어놓으면 스프링이 알아서 인스턴스를 생성하고 관리해준다...
+			   또 필요한 곳에 주입(injectrion)까지 해준다...
+		 -->
+		 
+		 <bean id="fripan" class="gui.cook.Fripan"></bean>
+		 <bean id="electPan" class="gui.cook.ElectPan"></bean>
+		 <bean id="cook" class="gui.cook.Cook"></bean>
+		 
+		 <bean id="joinForm" class="gui.view.JoinForm"></bean>
+</beans>

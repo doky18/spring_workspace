@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 
+
+
+1)등록 대상 1순위HandlerMappering
+2)해당 요청을 처리할 하위 컨트롤러가 누가 될 지를 결정짓는 객체
+	-DefaultAnnotationHandlerMapping (O)
+	-SimpleUrlHandlerMapping (O)
+	-BeanNameUrlHandlerMapping (O)
+	-ControllerBeanNameHandlerMapping
+	-ControllerClassNameHandlerMapping
+	
+	
+	 -->

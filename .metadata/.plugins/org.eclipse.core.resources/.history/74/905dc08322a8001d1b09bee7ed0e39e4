@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee https://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+
+	<!-- The definition of the Root Spring Container shared by all Servlets and Filters -->
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>/WEB-INF/spring/root-context.xml</param-value>
+	</context-param>
+	
+	<!-- Creates the Spring Container shared by all Servlets and Filters -->
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	
+	<!-- 
+		클라이언트의 요청이 들어올 때 지금까지는 서블릿이 제일 먼저 해당 요청을 하는 것처럼 보였지만
+		사실 서블릿이 요청을 받기도 전에 먼저 관여할 수 있는 객체가 지원되는데,
+		이 객체를 가리켜 필터라고 한다
+	 -->
+	 <filter>
+	 	<filter-name>myfilter</filter-name>
+	 	<filter-class>com.edu.mvc2.filter.CharaterEncodingFilter</filter-class>
+	 	<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+	 </filter>
+	 
+	<filter-mapping>
+		<filter-name>myfilter</filter-name>		
+		<url-pattern>/*</url-pattern>   
+	</filter-mapping>
+	
+	
+	<!-- Processes application requests 
+			개발자가 스프링 빈 xml을 초기화 파라미터에 명시하지 않을 경우 디폴트 파일명이 지정된다
+			파일명에 명명 규칙이 있다
+			서블릿 이름 -servlet.cmo
+			ex) dispatcher : WEB-INF/dispatcher-servlet.xml
+					babo 	:	WEB-INF/babo-servlet.xml
+	-->
+	<servlet>
+		<servlet-name>test</servlet-name>
+		<servlet-class>com.edu.mvc2.filter.FilterServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>WEB-INF/beanname.xml</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+		
+	<servlet-mapping>
+		<servlet-name>test</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+
+</web-app>

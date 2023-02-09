@@ -1,0 +1,27 @@
+!SESSION 2023-02-09 09:03:16.831 -----------------------------------------------
+eclipse.buildId=4.16.0.I20200604-0540
+java.version=11.0.17
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=ko_KR
+Framework arguments:  -product org.eclipse.epp.package.jee.product
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product org.eclipse.epp.package.jee.product
+
+This is a continuation of log file C:\spring_workspace\.metadata\.bak_0.log
+Created Time: 2023-02-09 14:18:14.808
+
+!ENTRY org.eclipse.ui 4 4 2023-02-09 14:18:14.808
+!MESSAGE Could not create action delegate for id: org.springframework.ide.eclipse.beans.ui.editor.actions.refactorPropertyElementAction
+!SUBENTRY 1 org.eclipse.ui 4 0 2023-02-09 14:18:14.808
+!MESSAGE Action must implement IEditorActionDelegate
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2023-02-09 14:25:46.099
+!MESSAGE Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2023-02-09 14:25:46.100
+!MESSAGE Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2023-02-09 14:27:36.553
+!MESSAGE Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2023-02-09 14:27:36.554
+!MESSAGE Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!

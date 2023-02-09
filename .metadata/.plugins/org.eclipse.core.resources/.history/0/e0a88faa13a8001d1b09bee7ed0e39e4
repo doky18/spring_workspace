@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd%22%3E
+
+    <!--
+    5가지 HandlerMapping 중 SimpleUrlHandlerMapping 학습
+    -->
+
+    <!--이 웹 어플리케이션에서 사용할 하위 컨트롤러 등록
+        최초의 웹브라우저에 의해서 DispatcherServlet가 가동될때 생성
+    -->
+    <bean id="listController"         class="com.edu.mvc2.controller.board.ListController" />
+    <bean id="detailController"     class="com.edu.mvc2.controller.board.DetailController" />
+    <bean id="registController"     class="com.edu.mvc2.controller.board.RegistController" />
+    <bean id="deleteController"     class="com.edu.mvc2.controller.board.DeleteController" />
+    <bean id="editController"     class="com.edu.mvc2.controller.board.EditController" />
+
+
+    <bean id="handlerMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+        <!--Bean 즉, 클래스가 보유한 멤버변수는 property 태그로 표현 -->
+        <property name="mappings">
+            <props>
+                <prop key="/board/list">listController</prop>
+                <prop key="/board/detail">detailController</prop>
+                <prop key="/board/regist">registController</prop>
+                <prop key="/board/delete">deleteController</prop>
+                <prop key="/board/edit">editController</prop>
+            </props>
+        </property>
+    </bean>
+</beans>

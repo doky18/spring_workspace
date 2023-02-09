@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	                    http://www.springframework.org/schema/beans/spring-beans.xsd
+	                    http://www.springframework.org/schema/context
+	                    http://www.springframework.org/schema/context/spring-context.xsd
+	                    http://www.springframework.org/schema/aop
+	                    http://www.springframework.org/schema/aop/spring-aop.xsd">
+	                    
+	<!-- 이 어플리케이션에서 사용될 모든 객체들의 명단을 적자..우리 대신 new 해주니깐!
+			여기에 적으면 스프링이 알아서 인스턴스 생성하고 관리해준다
+			또 필요한 곳에 주입(injection)해준다. -->
+	
+	<bean id="frypan" class="gui.cook.Fripan"/>
+	<bean id="electPan" class="gui.cook.ElectPan"/>
+	<bean id="cook" class="gui.cook.Cook"/>
+	
+	<!-- 회원가입에 필요한 컴포넌트 빈들을 등록하자 -->
+	<bean id="id" class="javax.swing.JTextField">
+		<constructor-arg type="int" value="20"/>
+		<!-- new JTextField(20) -->
+	</bean>
+	
+	<bean id="name" class="javax.swing.JTextField">
+		<constructor-arg type="int" value="20"/>
+	</bean>
+	
+	<bean id="email" class="javax.swing.JTextField">
+		<constructor-arg type="int" value="20"/>
+	</bean>
+	
+	<bean id="regist" class="javax.swing.JButton">
+		<constructor-arg type="String" value="등록"/>
+	</bean>
+	
+	<bean id="flow" class="java.awt.FlowLayout"/>
+	
+	<!-- JoinForm이 필요로하는 빈들을 주입시키기(즉 엮기 weaving) -->
+	<bean id="joinForm" class="gui.view.JoinForm">	<!-- new -->
+		<!-- setter호출 -->
+		<property name="t_id" ref="id"/>
+		<property name="t_name" ref="name"/>
+		<property name="t_email" ref="email"/>
+		<property name="bt_regist" ref="regist"/>
+		<property name="flowLayout" ref="flow"/>
+	</bean>
+	
+	<!-- 학생 등록 -->
+	<bean id="schoolBell" class="gui.school.SchoolBell"></bean>
+<!-- 	<bean id="student" class="gui.school.Student">	해석하하면, Student는 생성자를 가지고 있다.!
+		<constructor-arg name="bell" ref="schoolBell"/>
+	</bean> -->
+	<bean id="student" class="gui.school.Student"/>
+	
+	<!-- AOP 적용하기
+			1) 공통 로직을 advisor로 둔다(빈으로 등록)
+			2) 공통 로직을 어느 시점, 어느 지점에 동작시킬지 논리를 작성. 즉 관점을 등록한다
+	 -->
+	<aop:config>
+		<aop:aspect ref="schoolBell">
+			<aop:pointcut id="bellPointCut" expression="execution(public * gui.school.Student.*(..))"/>	<!-- 어느 지점에서 .....///..==모든-->
+			<aop:before method="ring" pointcut-ref="bellPointCut"/>	<!-- 시점 -->
+		</aop:aspect>
+	</aop:config>
+	
+</beans>

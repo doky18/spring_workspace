@@ -1,0 +1,79 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	                    http://www.springframework.org/schema/beans/spring-beans.xsd
+	                    http://www.springframework.org/schema/context
+	                    http://www.springframework.org/schema/context/spring-context.xsd
+	                    http://www.springframework.org/schema/aop
+	                    http://www.springframework.org/schema/aop/spring-aop.xsd">
+	                    
+		<!-- 이 어플리케이션에서 사용될 모든~~ 객체들의 명단을 적자
+			   여기에 적어놓으면 스프링이 알아서 인스턴스를 생성하고 관리해준다...
+			   또 필요한 곳에 주입(injectrion)까지 해준다...
+		 -->
+		 
+		 <bean id="fripan" class="gui.cook.Fripan"/>
+		 <bean id="electPan" class="gui.cook.ElectPan"/>
+		 <bean id="cook" class="gui.cook.Cook"/>
+		 
+		 <!-- 회원가입에 필요한 컴포넌트 빈들을 등록하자 -->
+		 <bean id="id" class="javax.swing.JTextField">
+			 <constructor-arg type="int" value="20"/>
+		 <!-- new JTextField(20) -->
+		 </bean>
+		 
+		 <bean id="name" class="javax.swing.JTextField">
+			 <constructor-arg type="int" value="20"/>
+		 </bean>
+		 
+		 <bean id="email" class="javax.swing.JTextField">
+			 <constructor-arg type="int" value="20"/>
+		 </bean>
+		 
+		 <bean id="regist" class="javax.swing.JButton">
+		 	<constructor-arg type="String" value="등록"/>
+		 </bean>
+		 
+		 <bean id="flow" class="java.awt.FlowLayout"/>
+		 
+		 
+		 <!-- 
+			 이까지 메모리에 올린 것. 주입한 적이 없음. 이제 주입 ㄱ 
+			 JoinForm이 필요로 하는 빈들을 주입시키기(즉, 엮기 weaving)
+																						 -->
+		 
+		 <bean id="joinForm" class="gui.view.JoinForm">
+		 	<property 		name="t_id" 				ref="id"/>
+		 	<property 		name="t_name" 		ref="name"/>
+		 	<property 		name="t_email" 		ref="email"/>
+		 	<property 		name="bt_regist"		ref="regist"/>
+		 	<property 		name="flowLayout"			ref="flow"/>
+		 </bean>
+		 
+		 
+		 <!-- 학생 등록 -->
+		 <bean id="schoolBell" class="gui.school.SchoolBell"></bean>
+		 <bean id="student" class="gui.school.Student">
+		 	<constructor-arg name="bell" ref="schoolBell"/>
+		 	<!-- 이 bean은 생성자 bell이 있는 것 -->
+		 </bean>
+		
+		 <!-- AOP 적용하기
+		 	1)공통 로직을 advisor 로 둔다 (빈으로 등록)
+		 	2)공통 로직을 어느 시점, 어느 지점에 동작시킬지 논리를 작성. 즉 관점을 등록한다
+		  -->
+		 
+		 <aop:config>
+		 	<aop:aspect ref="schoolBell">
+		 		<!--언제 이걸 실행? 학생의 모든 메서드들을 실행하는 시점에~! 
+		 		메서드 중심이라서 public이 제일 앞에 옴 
+		 		..  : 모든 메서드
+		 		(**) : 매개변수-->
+		 		<aop:pointcut id="bellPointCut" expression="public * gui.school.Student..(**)"/>
+		 		<aop:before method="ring" pointcut-ref="bellPointCut"/>
+		 	</aop:aspect>
+		 </aop:config>
+		 
+</beans>
