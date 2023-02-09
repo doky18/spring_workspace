@@ -28,15 +28,28 @@
   
  
  	<!-- 5가지 핸들러 중 BeanNameUrlHandlerMapping -->
-    <bean name="/board/list"         				class="com.edu.mvc2.controller.board.ListController" />
+    <bean name="/board/list"         				class="com.edu.mvc2.controller.board.ListController">
+    	<property name="boardService" 	ref="boardServiceImpl" ></property>
+    </bean>
+    
   	<bean name="/board/registform"         	class="com.edu.mvc2.controller.board.RegistFormController" />
+  	
     <bean name="/board/regist"    		 		class="com.edu.mvc2.controller.board.RegistController" >
     	<!-- bean과 bean끼리 연결짓는 것을 weaving이라고 한다 -->
     	<property name="boardService" 	ref="boardServiceImpl"/>
     </bean>
-    <bean name="/board/detail"     				class="com.edu.mvc2.controller.board.DetailController" />
-    <bean name="/board/edit"     				class="com.edu.mvc2.controller.board.EditController" />
-    <bean name="/board/delete"     			class="com.edu.mvc2.controller.board.DeleteController" />
+    
+    <bean name="/board/detail"     				class="com.edu.mvc2.controller.board.DetailController" >
+    	<property name="boardService" 	ref="boardServiceImpl" ></property>
+    </bean>
+    
+    <bean name="/board/edit"     				class="com.edu.mvc2.controller.board.EditController">
+    	<property name="boardService" 	ref="boardServiceImpl" ></property>
+    </bean>
+    <bean name="/board/delete"     			class="com.edu.mvc2.controller.board.DeleteController" >
+    	<property name="boardService" 	ref="boardServiceImpl" ></property>
+    </bean>
+    
     
     <!-- 하위 컨트롤러가 반환하는 뷰의 이름을 해석하여, View를 반환해주는 해석자를 등록하자
     	스프링에서 jsp 매핑 시 주로 사용하는 방식은 

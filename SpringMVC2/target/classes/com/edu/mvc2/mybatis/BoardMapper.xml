@@ -8,7 +8,7 @@
 	</select>
 	
 	<select id="select" parameterType="int" resultType="Board">
-		selec * from board where board_idx=#{board_idx}
+		select * from board where board_idx=#{board_idx}
 	</select>
 	
 	

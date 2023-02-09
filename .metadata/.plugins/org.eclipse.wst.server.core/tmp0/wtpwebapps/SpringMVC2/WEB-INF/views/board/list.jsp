@@ -1,4 +1,11 @@
+<%@page import="com.edu.mvc2.domain.Board"%>
+<%@page import="java.util.List"%>
 <%@ page contentType="text/html; charset=UTF-8"%>
+<%
+	List boardList=(List)request.getAttribute("boardList");
+	out.print("게시물 수는 "+boardList.size());
+
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -33,22 +40,24 @@
 				<table class="table">
 					<thead class="thead-dark">
 						<tr>
-							<th>Firstname</th>
-							<th>Lastname</th>
-							<th>Email</th>
-							<th>Email</th>
-							<th>Email</th>
+							<th>No</th>
+							<th>제목</th>
+							<th>작성자</th>
+							<th>내용</th>
+							<th>작성일</th>
 						</tr>
 					</thead>
 					<tbody>
+						<%for(int i=0; i<boardList.size();i++){ %>
+						<%Board board=(Board)boardList.get(i); %>
 						<tr>
-							<td>John</td>
-							<td>Doe</td>
-							<td>john@example.com</td>
-							<td>john@example.com</td>
-							<td>john@example.com</td>
+							<td><%=i %></td>
+							<td><a href="/board/detail?board_idx=<%=board.getBoard_idx()%>"><%=board.getTitle() %></a></td>
+							<td><%=board.getWriter() %></td>
+							<td><%=board.getContent() %></td>
+							<td><%=board.getRegdate() %></td>
 						</tr>
-						
+						<%} %>
 						<tr>
 							<td colspan="5">
 								<button type="button" class="btn btn-danger" id="bt_regist">등록</button>								
