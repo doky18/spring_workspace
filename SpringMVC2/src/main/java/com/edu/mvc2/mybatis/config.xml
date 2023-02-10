@@ -5,6 +5,7 @@
 <configuration>
 	<typeAliases>
 		<typeAlias type="com.edu.mvc2.domain.Board" alias="Board"/>
+		<typeAlias type="com.edu.mvc2.domain.Gallery" alias="Gallery"/>
 	</typeAliases>
   <environments default="development">
     <environment id="development">
@@ -17,6 +18,6 @@
   </environments>
   <mappers>
     <mapper resource="com/edu/mvc2/mybatis/BoardMapper.xml"/>
-
+	<mapper resource="com/edu/mvc2/mybatis/GalleryMapper.xml"/>
   </mappers>
 </configuration>

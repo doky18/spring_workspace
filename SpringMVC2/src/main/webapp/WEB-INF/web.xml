@@ -4,14 +4,21 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee https://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
 
 	<!-- The definition of the Root Spring Container shared by all Servlets and Filters -->
+	<!-- application 내장객체에 전달할 초기화 파라미터 -->
+	
 	<context-param>
-		<param-name>contextConfigLocation</param-name>
-		<param-value>/WEB-INF/spring/root-context.xml</param-value>
+		<param-name>contextConfigLocation</param-name> 
+		<param-value>/WEB-INF/root-context.xml</param-value>
 	</context-param>
 	
+	
 	<!-- Creates the Spring Container shared by all Servlets and Filters -->
+	<!-- 서버 가동 및 중지 이벤트를 처리하는 리스너 -->
 	<listener>
-		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class> 
+	<!-- 
+		우리가 만든거 주석으로 막아 <listener-class>com.edu.mvc2.listener.ContextLoaderListener</listener-class>
+	-->
 	</listener>
 	
 	<!-- 
@@ -19,6 +26,7 @@
 		사실 서블릿이 요청을 받기도 전에 먼저 관여할 수 있는 객체가 지원되는데,
 		이 객체를 가리켜 필터라고 한다
 	 -->
+	 
 	 <filter>
 	 	<filter-name>encodingFilter</filter-name>
 	 	<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
@@ -55,7 +63,24 @@
 		
 	<servlet-mapping>
 		<servlet-name>dispatcher</servlet-name>
-		<url-pattern>/</url-pattern>
+		<url-pattern>/client/*</url-pattern>
+	</servlet-mapping>
+	
+	<!-- 관리자모드와 관련이 있는  -->
+	
+	<servlet>
+		<servlet-name>adminServlet</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>WEB-INF/admin-config.xml</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+		
+	<servlet-mapping>
+		<servlet-name>adminServlet</servlet-name>
+		<url-pattern>/admin/*</url-pattern>
 	</servlet-mapping>
 
 </web-app>

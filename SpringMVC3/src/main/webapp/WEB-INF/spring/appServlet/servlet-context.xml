@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans
+	xmlns="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+
+	<!-- 개발자가 핸들러매핑을 등록하지 않으면 디폴트 핸들러 매핑이 적용되는데, DefaultAnnotationHandlerMapping 
+		xml 설정파일을 가나소화 시키기 위해 더이상, 빈들의 매핑을 xml에서 하기 보다는 java5부터 지원하고 있는 어노테이션 기반으로 
+		매핑을 처리하는 방식 @어노테이션(주석이지만 프로그램에서 사용되는 주석) -->
+
+	<!-- DispatcherServlet Context: defines this servlet's request-processing 
+		infrastructure -->
+
+	<!-- Enables the Spring MVC @Controller programming model -->
+	<annotation-driven />
+	
+
+	<!-- Handles HTTP GET requests for /resources/** by efficiently serving 
+		up static resources in the ${webappRoot}/resources directory -->
+	<!--정적자원 (Html, css, js, image 등등)을 컨트롤러 매핑에 의하지 않고 단순 링크만으로도 접근 가능하게 하기 -->
+	<resources mapping="/resources/**" location="/resources/" />
+
+
+	<!-- Resolves views selected for rendering by @Controllers to .jsp resources 
+		in the /WEB-INF/views directory -->
+	<beans:bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<beans:property name="prefix" value="/WEB-INF/views/" />
+		<beans:property name="suffix" value=".jsp" />
+	</beans:bean>
+
+	<!-- @가 붙은 스프링의 컴포넌트의 대상이 되는 객체는 전부찾아서 인스턴스를 생성해준다 -->
+	<!-- 
+	<beans:bean id="fileManager" class="com.edu.mvc3.model.util.FileManager"/>
+	<beans:bean id="galleryController" class="com.edu.mvc3.controller.gallery.GalleryController"> 
+		<property>파일매니저~~~~
+	</beans:bean>
+	 이렇게 써줘야하는데 넘 번거로운데? -> 이걸 사용할 컨트롤러에서 @autowired 로 엮기만 하면 해결 됨.....
+	 -->
+	 
+	<context:component-scan
+		base-package="com.edu.mvc3.controller" />
+	<!--app에 들어있는 컴포넌트들을 스캔하겠어.... 어디에 있는? "~~.controller"컨트롤러만 죄다 올릴거다 -->
+
+
+
+</beans:beans>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<!-- Root Context: defines **shared resources** visible to all other web components -->
+	<!-- 모든 컨트롤러가 공유할 수 있는 모델파트의 컴포넌트가 주로 등록됨.
+		여기에 등록된 컴포넌트들은 서버가 가동될 때 인스턴ㄴ스들이 생성되면, 
+		이 빈들의 ApplicatoinContext 컨테이너는 서블릿 소속이 아닌 ServletContext가 보유하고 있다
+	 -->
+	<bean id="fileManager" class="com.edu.mvc3.model.util.FileManager"/>
+	
+	
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="maxUploadSize" value="3145728"></property>
+	</bean>
+		
+</beans>

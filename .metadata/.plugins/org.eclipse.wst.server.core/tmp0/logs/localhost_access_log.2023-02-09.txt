@@ -92,3 +92,16 @@
 0:0:0:0:0:0:0:1 - - [09/Feb/2023:15:43:07 +0900] "GET /board/detail?board_idx=2 HTTP/1.1" 200 2201
 0:0:0:0:0:0:0:1 - - [09/Feb/2023:15:43:08 +0900] "POST /board/delete HTTP/1.1" 302 -
 0:0:0:0:0:0:0:1 - - [09/Feb/2023:15:43:08 +0900] "GET /board/list HTTP/1.1" 200 2329
+127.0.0.1 - - [09/Feb/2023:15:50:46 +0900] "GET / HTTP/1.1" 404 721
+0:0:0:0:0:0:0:1 - - [09/Feb/2023:15:50:52 +0900] "GET /board/list HTTP/1.1" 200 2329
+0:0:0:0:0:0:0:1 - - [09/Feb/2023:15:50:54 +0900] "GET /board/detail?board_idx=7 HTTP/1.1" 200 2428
+0:0:0:0:0:0:0:1 - - [09/Feb/2023:15:51:02 +0900] "POST /board/edit HTTP/1.1" 302 -
+0:0:0:0:0:0:0:1 - - [09/Feb/2023:15:51:02 +0900] "GET /board/detail?board_idx=7 HTTP/1.1" 200 2425
+0:0:0:0:0:0:0:1 - - [09/Feb/2023:15:51:22 +0900] "GET /board/list HTTP/1.1" 200 2326
+0:0:0:0:0:0:0:1 - - [09/Feb/2023:17:53:14 +0900] "GET /board/detail?board_idx=5 HTTP/1.1" 200 2411
+0:0:0:0:0:0:0:1 - - [09/Feb/2023:17:53:16 +0900] "GET /board/detail?board_idx=7 HTTP/1.1" 200 2425
+0:0:0:0:0:0:0:1 - - [09/Feb/2023:17:53:51 +0900] "GET /board/detail?board_idx=7&title=%EB%8F%84%EA%B2%BD1&writer=%EB%8F%84%EA%B2%BD1&content=%EB%8F%84%EA%B2%BD1%EA%BA%BC HTTP/1.1" 200 2425
+0:0:0:0:0:0:0:1 - - [09/Feb/2023:17:54:05 +0900] "GET /board/detail?board_idx=7&title=%EB%8F%84%EA%B2%BD1&writer=%EB%8F%84%EA%B2%BD1&content=%EB%8F%84%EA%B2%BD1%EA%BA%BC HTTP/1.1" 200 2425
+0:0:0:0:0:0:0:1 - - [09/Feb/2023:17:54:10 +0900] "POST /board/regist HTTP/1.1" 302 -
+0:0:0:0:0:0:0:1 - - [09/Feb/2023:17:54:10 +0900] "GET /board/list HTTP/1.1" 200 2543
+0:0:0:0:0:0:0:1 - - [09/Feb/2023:17:54:15 +0900] "GET /board/detail?board_idx=9 HTTP/1.1" 200 2425

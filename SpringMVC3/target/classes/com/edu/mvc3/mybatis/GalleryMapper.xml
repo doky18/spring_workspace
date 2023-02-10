@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Gallery">
+
+	<!-- CRUD 작업 -->
+	
+	<select id="selectAll" resultType="Gallery">
+		select * from gallery order by gallery_idx desc
+	</select>
+
+
+	<select id="select" resultType="Gallery" parameterType="int">
+		select * from gallery where gallery_idx=#{gallery_idx}
+	</select>
+	
+	
+	<insert id="insert" parameterType="Gallery">
+		insert into gallery(title, writer, content, filename)
+		values(#{title},#{writer},#{content},#{filename})
+	</insert>
+
+
+	<update id="update" parameterType="Gallery">
+		update gallery set title=#{title}, writer=#{writer}, content=#{content}, filename=#{filename}
+		where gallery_idx=#{gallery_idx}
+	</update>
+	
+	
+	<delete id="delete" parameterType="int">
+		delete from gallery where gallery_idx=#{gallery_idx}
+	</delete>
+	
+</mapper>

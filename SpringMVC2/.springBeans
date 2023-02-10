@@ -9,6 +9,8 @@
 	<configs>
 		<config>src/main/webapp/WEB-INF/simple.xml</config>
 		<config>src/main/webapp/WEB-INF/dispatcher-servlet.xml</config>
+		<config>src/main/webapp/WEB-INF/admin-config.xml</config>
+		<config>src/main/webapp/WEB-INF/root-context.xml</config>
 	</configs>
 	<autoconfigs>
 	</autoconfigs>

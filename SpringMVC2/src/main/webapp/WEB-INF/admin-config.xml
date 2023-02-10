@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+<bean id="listController" class="com.edu.mvc2.admin.controller.board.ListController"></bean>
+
+<!-- 핸들러 매핑을 결정 
+	SimpleUrlHandlerMapping
+	BeanNameUrlHanderMapping (o)
+	DefaultAnnotationHandlerMapping	
+-->
+<!--나는 BeanNameUrlHandlerMapping을 쓸거라고 선언 -->
+    <bean class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping">
+        <property name="alwaysUseFullPath" value="true" />
+    </bean>
+    
+<!-- 컨트롤ㄹ러만 남김 -->
+    <bean name="/admin/board/list" class="com.edu.mvc2.admin.controller.board.ListController">
+        <property name="boardService" ref="boardServiceImpl"/>
+    </bean>
+
+    <!--
+        핸들러 매핑을 결정한다 
+        SimpleUrlHandlerMapping
+        BeanNameUrlHandlerMapping
+        DefaultAnnotationHandlerMapping
+    -->
+    <!--하위컨트롤러 -->
+    <!--기타-->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/views/"/>
+		<property name="suffix" value=".jsp"/>
+	</bean>	
+
+</beans>
