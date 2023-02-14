@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ReBoard">
+
+<!-- 동물 올림픽의 category == team, rank == step -->
+	
+	<select id="selectAll" resultType="ReBoard">
+		select * from reboard order by team desc, step asc
+	</select>
+	
+	<select id="select" parameterType="int" resultType="ReBoard">
+		select * from reboard where reboard_idx=#{reboard_idx}
+	</select>
+	
+	<!-- 원글 
+	같은 insert 문 내에서  nextval 호출을 여러번 해도, 오직 한번만 증가한다 **-->
+	<insert id="insert" parameterType="ReBoard">
+		insert into reboard(reboard_idx, title, writer, content, team)
+		values(seq_reboard.nextval, #{title}, #{writer}, #{content}, seq_reboard.nextval)
+	</insert>
+	
+	<update id="update" parameterType="ReBoard">
+		update reboard set title=#{title}, writer=#{writer}, content=#{content}
+		where reboard_idx=#{reboard_idx}
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		delete reboard where reboard_idx=#{reboard_idx}
+	</delete>
+	
+	 <!-- 답변달기 (자리확보, 답변달기) -->
+
+	
+
+    <!-- 자리확보 -->
+</mapper>

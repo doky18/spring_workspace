@@ -30,12 +30,12 @@
 	<WatchedResource>WEB-INF/web.xml</WatchedResource>
     <WatchedResource>WEB-INF/tomcat-web.xml</WatchedResource>
     <WatchedResource>${catalina.base}/conf/web.xml</WatchedResource>
+    <ResourceLink type="javax.sql.DataSource"
+                      name="jdbc/oracle"
+                      global="jdbc/oracle" />
 
     <ResourceLink type="javax.sql.DataSource"
                       name="jdbc/mysql"
                       global="jdbc/mysql" />
                       
-    <ResourceLink type="javax.sql.DataSource"
-                      name="jdbc/oracle"
-                      global="jdbc/oracle" />
 </Context>

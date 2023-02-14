@@ -27,7 +27,8 @@ public class BoardController {
 	
 	//글쓰기 폼 요청처리
 	@RequestMapping(value="/board/registform", method=RequestMethod.GET)
-	public String registForm() {	//registForm은 view 영역(폼을 보여주기만), 얘는 마중물 같은 존재인가요? 
+	public String registForm() {	//registForm은 view 영역(폼을 보여주기만), 얘는 마중물 같은 존재인가요? 네 간접매핑이라고 하면 됨
+												//WEB-INF안에 일부러 넣어뒀잖아. 왜? 그 밖에 있으면 주소가 노출되니까 보안을 위해서
 		return "board/regist";			//regist는 db랑 연결되어서,,, 
 	}
 	
