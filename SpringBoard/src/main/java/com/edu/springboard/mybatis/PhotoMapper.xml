@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Photo">
+
+	<select id="selectAll" resultType="Photo">
+		select * from photo order by photo_idx desc
+	</select>
+
+	<!-- 부모에 소속된 글 죄다 가져오기 -->
+	<select id="selectByGallery" parameterType="int" resultType="Photo">
+		select * from photo where gallery_idx=#{gallery_idx}
+	</select>
+	
+	<insert id="insert" parameterType="Photo">
+		insert into photo(photo_idx, filename, gallery_idx)
+		values(seq_photo.nextval, #{filename}, #{gallery.gallery_idx})
+	</insert>
+	
+	
+	
+	<!-- 하나의 글에 소속된 모든 사진 지우기 -->
+	<delete id="deleteByGallery" parameterType="int">
+		delete photo where gallery_idx=#{gallery_idx}
+	</delete>
+
+</mapper>

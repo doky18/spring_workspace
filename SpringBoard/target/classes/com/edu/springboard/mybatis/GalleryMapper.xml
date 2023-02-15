@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Gallery">
+
+	<!-- 컬렉션으로 자식 가져오기 위함 -->
+	<resultMap type="Gallery" id="galleryMap">
+		<id 			column="gallery_idx"		property="gallery_idx"/>
+		<result 	column="title"				property="title"/>
+		<result 	column="writer"				property="writer"/>
+		<result 	column="content"			property="content"/>
+		<result 	column="regdate"			property="regdate"/>
+		<result 	column="hit"					property="hit"/>
+		
+		<!-- 자식모으기 (photo) -->
+		<collection column="gallery_idx"
+				property="photoList"
+				javaType="java.util.List"
+				ofType="Photo"
+				select="Photo.selectByGallery"/>
+	</resultMap>
+	
+	<select id="selectAll" resultMap="galleryMap">
+		select * from gallery order by gallery_idx desc
+	</select>
+	
+	<select id="select" parameterType="int" resultMap="galleryMap">
+		select * from gallery where gallery_idx=#{gallery_idx}
+	</select>
+	
+	<insert id="insert" parameterType="Gallery">
+		insert into gallery(gallery_idx, title, writer, content)
+		values(seq_gallery.nextval, #{title}, #{writer}, #{content})
+		
+		<selectKey order="AFTER" keyColumn="galleryidx" keyProperty="gallery_idx"  resultType="int">
+			<!-- 위에서 실행된 insert 에 의해 발생한 pk 가져오기 
+			select last_insert_id() as gallery_idx-->
+			select seq_gallery.currval as gallery_idx from dual
+		</selectKey>
+	</insert>
+	
+	<update id="update" parameterType="Gallery">
+		update gallery set title=#{title}, writer=#{writer}, content=#{content}
+		where gallery_idx=#{gallery_idx}
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		delete gallery where gallery_idx=#{gallery_idx}
+	</delete>
+	
+	<!-- 이거 다 시험에 낸대 -->
+
+</mapper>

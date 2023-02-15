@@ -24,4 +24,9 @@
 	
 	<context:component-scan base-package="com.edu.springboard.client.controller" />
 	
+	<!-- 업로드 컴포넌트 빈 등록 -->
+	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <beans:property name="maxUploadSizePerFile" value="3145728"/>
+    </beans:bean>
+	
 </beans:beans>

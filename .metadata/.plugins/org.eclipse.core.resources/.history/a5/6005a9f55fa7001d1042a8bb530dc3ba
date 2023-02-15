@@ -1,8 +1,0 @@
-package gui.school;
-
-public class SchoolBell2 implements Bell{
-	@Override
-	public void ring() {
-		System.out.println("딩동댕♬");
-	}
-}

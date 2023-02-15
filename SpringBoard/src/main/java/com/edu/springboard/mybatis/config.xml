@@ -5,9 +5,13 @@
 <configuration>
 	<typeAliases>
 		<typeAlias type="com.edu.springboard.domain.ReBoard" alias="ReBoard"/>
+		<typeAlias type="com.edu.springboard.domain.Photo" alias="Photo"/>
+		<typeAlias type="com.edu.springboard.domain.Gallery" alias="Gallery"/>
 	</typeAliases>
   
   <mappers>
     <mapper resource="com/edu/springboard/mybatis/ReBoardMapper.xml"/>
+    <mapper resource="com/edu/springboard/mybatis/PhotoMapper.xml"/>
+    <mapper resource="com/edu/springboard/mybatis/GalleryMapper.xml"/>
   </mappers>
 </configuration>
