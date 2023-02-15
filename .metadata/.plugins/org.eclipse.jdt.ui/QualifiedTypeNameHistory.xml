@@ -1,14 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-    <fullyQualifiedTypeName name="com.edu.mvc2.model.board.JdbcBoardDAO"/>
-    <fullyQualifiedTypeName name="com.edu.mvc2.model.board.BoardDAO"/>
-    <fullyQualifiedTypeName name="com.edu.mvc2.mybatis.MybatisConfig"/>
-    <fullyQualifiedTypeName name="com.edu.mvc2.model.board.MybatisBoardDAO"/>
-    <fullyQualifiedTypeName name="com.edu.mvc2.exception.BoardException"/>
-    <fullyQualifiedTypeName name="com.edu.mvc2.domain.Board"/>
-    <fullyQualifiedTypeName name="java.lang.Integer"/>
-    <fullyQualifiedTypeName name="org.springframework.web.servlet.mvc.Controller"/>
-    <fullyQualifiedTypeName name="org.springframework.context.ApplicationContext"/>
     <fullyQualifiedTypeName name="org.springframework.context.support.ClassPathXmlApplicationContext"/>
     <fullyQualifiedTypeName name="com.edu.mvc2.model.board.BoardService"/>
     <fullyQualifiedTypeName name="javax.servlet.http.HttpServlet"/>
@@ -60,4 +51,13 @@
     <fullyQualifiedTypeName name="com.edu.springboard.model.util.FileManager"/>
     <fullyQualifiedTypeName name="org.springframework.beans.factory.annotation.Autowired"/>
     <fullyQualifiedTypeName name="org.springframework.beans.factory.annotation.Qualifier"/>
+    <fullyQualifiedTypeName name="java.net.ServerSocket"/>
+    <fullyQualifiedTypeName name="java.lang.Runnable"/>
+    <fullyQualifiedTypeName name="java.lang.Thread"/>
+    <fullyQualifiedTypeName name="java.io.InputStreamReader"/>
+    <fullyQualifiedTypeName name="java.io.OutputStreamWriter"/>
+    <fullyQualifiedTypeName name="java.util.Vector"/>
+    <fullyQualifiedTypeName name="com.edu.springboard.android.ChatThread"/>
+    <fullyQualifiedTypeName name="com.edu.springboard.android.ChatServer"/>
+    <fullyQualifiedTypeName name="java.net.Socket"/>
 </qualifiedTypeNameHistroy>
