@@ -13,7 +13,8 @@
 	<annotation-driven />
 
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
-	<resources mapping="/resources/**" location="/resources/" />
+	<!-- 매핑 이름은 우리가 바꿀 수 있다 /resources/**을 static으로 바꾸기 -->
+	<resources mapping="/static/**" location="/resources/" />
 
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -22,7 +23,5 @@
 	</beans:bean>
 	
 	<context:component-scan base-package="com.edu.springboard.client.controller" />
-	
-	
 	
 </beans:beans>
