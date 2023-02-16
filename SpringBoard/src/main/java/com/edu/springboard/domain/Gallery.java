@@ -16,6 +16,7 @@ public class Gallery {
 	private int hit;
 	private List<Photo> photoList;		//mybatis의 collection을 위한 변수
 	
+	
 	MultipartFile[] photo;//apache file upload 구현
     //변수명이 클라이언트와 일치해야함
 }

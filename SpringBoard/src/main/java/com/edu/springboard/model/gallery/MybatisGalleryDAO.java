@@ -3,6 +3,7 @@ package com.edu.springboard.model.gallery;
 import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.edu.springboard.domain.Gallery;
@@ -12,6 +13,7 @@ import com.edu.springboard.exception.GalleryException;
 public class MybatisGalleryDAO implements GalleryDAO{
 	
 	//Mybatis-Spring에서는 기존 Mybatis의 쿼리 담당 객체였던 SqlSession이 SqlSessionTemplate로 변경됨 
+	@Autowired
 	private SqlSessionTemplate sqlSessionTemplate;
 
 	@Override

@@ -34,6 +34,7 @@ public class ChatThread implements Runnable{
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		thread.start();
 	}
 
 	 //듣기
@@ -41,6 +42,12 @@ public class ChatThread implements Runnable{
         String msg = null;
         try {
             msg = buffr.readLine();
+            
+            //디자인 제어는 오직 메인스레드에서만 가능하다
+            //아래의 코드는 현재 클래스가 개발자 정의 스레드이므로, 즉 메인이 아닌 스레드이므로, 디자인을 제어할 수 없다
+            //따라서 직접 디자인을 제어하려 하지말고, 메인 스레드에게 부탁해야 한다...
+            //이때 사용되는 객체가 바로 Handler.os 패키지의 Handler 객체이다
+            System.out.println("클라이언트 msg :"+msg);
         } catch (IOException e) {
             e.printStackTrace();
         }

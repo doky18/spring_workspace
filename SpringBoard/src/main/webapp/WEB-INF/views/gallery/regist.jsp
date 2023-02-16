@@ -172,7 +172,7 @@ function regist() {
 		contentType:false,	//application/x-www 방지
 		data:formData,
 		success:function(result, status, xhr){
-			
+			alert(result);
 		}
 		
 	})
