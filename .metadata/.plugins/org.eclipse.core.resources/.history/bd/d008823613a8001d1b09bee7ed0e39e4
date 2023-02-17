@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
-<!-- 5가지 HandlerMapping중 SimpleUrlHandlerMapping 학습 -->
-
-<bean id="HandlerMapping" class="SimpleUrlHandlerMapping">
-	<!-- 빈 즉 클래스가 보유한 멤버변수는 property 태그로 표현함 -->
-</bean>

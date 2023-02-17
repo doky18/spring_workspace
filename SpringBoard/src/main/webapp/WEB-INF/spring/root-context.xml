@@ -19,7 +19,7 @@
 	
 	<jee:jndi-lookup
 		id="dataSource" 
-		jndi-name="jdbc/oracle"
+		jndi-name="jdbc/mysql"
 		resource-ref="true"/>		
 	
 	<!-- 

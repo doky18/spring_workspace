@@ -12,7 +12,7 @@
 	
 	<insert id="insert" parameterType="Notice">
 		insert into notice(title, writer, content)
-		values(#{title},#{writer},#content})
+		values(#{title},#{writer},#{content})
 	</insert>
 	
 	<update id="update" parameterType="Notice">

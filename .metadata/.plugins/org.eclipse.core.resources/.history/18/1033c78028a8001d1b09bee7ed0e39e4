@@ -1,6 +1,0 @@
-package com.edu.mvc2.model.board;
-
-public interface BoardService {
-	//MybatisBoardDAO dao;
-	
-}
