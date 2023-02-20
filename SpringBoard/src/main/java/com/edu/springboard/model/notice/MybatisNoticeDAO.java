@@ -30,7 +30,7 @@ public class MybatisNoticeDAO implements NoticeDAO{
 	public void insert(Notice notice) throws NoticeException {
 		int result=sqlSessionTemplate.insert("Notice.insert", notice);
 		if(result<1) {
-			throw new ReBoardException("글 등록 실패");
+			throw new NoticeException("글 등록 실패");
 		}
 	}
 
@@ -38,7 +38,7 @@ public class MybatisNoticeDAO implements NoticeDAO{
 	public void delete(int notice_idx) throws NoticeException{
 		int result=sqlSessionTemplate.delete("Notice.delete", notice_idx);
 		if(result<1) {
-			throw new ReBoardException("글 삭제 실패");
+			throw new NoticeException("글 삭제 실패");
 		}
 	}
 
@@ -46,7 +46,7 @@ public class MybatisNoticeDAO implements NoticeDAO{
 	public void update(Notice notice) throws NoticeException{
 		int result=sqlSessionTemplate.update("Notice.update", notice);
 		if(result<1) {
-			throw new ReBoardException("글 수정 실패");
+			throw new NoticeException("글 수정 실패");
 		}
 	}
 
