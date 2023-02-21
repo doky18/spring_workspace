@@ -212,4 +212,8 @@
   <public id="mybatis-3-mapper.dtd" publicId="-//mybatis.org//DTD Mapper 3.0//EN" uri="jar:file:/C:/java_ec/egovclipse/plugins/egovframework.dev.imp.dbio_3.10.0.202102261503.jar!/dtd/mybatis-3-mapper.dtd" webURL="http://mybatis.org/dtd/mybatis-3-mapper.dtd"/>
   <public id="ibatis-2-config.dtd" publicId="-//ibatis.apache.org//DTD SQL Map Config 2.0//EN" uri="jar:file:/C:/java_ec/egovclipse/plugins/egovframework.dev.imp.dbio_3.10.0.202102261503.jar!/dtd/sql-map-config-2.dtd" webURL="http://ibatis.apache.org/dtd/sql-map-config-2.dtd"/>
   <public id="ibatis-2-mapper.dtd" publicId="-//ibatis.apache.org//DTD SQL Map 2.0//EN" uri="jar:file:/C:/java_ec/egovclipse/plugins/egovframework.dev.imp.dbio_3.10.0.202102261503.jar!/dtd/sql-map-2.dtd" webURL="http://ibatis.apache.org/dtd/sql-map-2.dtd"/>
+  <public publicId="-//Hibernate/Hibernate Mapping DTD 3.0//EN" uri="file:/C:/java_ec/egovclipse/plugins/org.hibernate.eclipse.mapper_5.4.9.v20200506-1716/dtd/hibernate-mapping-3.0.dtd" webURL="http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd"/>
+  <public publicId="-//Hibernate/Hibernate Configuration DTD 3.0//EN" uri="file:/C:/java_ec/egovclipse/plugins/org.hibernate.eclipse.mapper_5.4.9.v20200506-1716/dtd/hibernate-configuration-3.0.dtd" webURL="http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd"/>
+  <public publicId="-//Hibernate/Hibernate Reverse Engineering DTD 3.0//EN" uri="file:/C:/java_ec/egovclipse/plugins/org.hibernate.eclipse.mapper_5.4.9.v20200506-1716/dtd/hibernate-reverse-engineering-3.0.dtd"/>
+  <public publicId="-//Red Hat, Inc.//DTD Meta 1.0//EN" uri="file:/C:/java_ec/egovclipse/plugins/org.jboss.tools.common.model_3.14.0.v20200424-0835/schema/meta.dtd"/>
 </catalog>
