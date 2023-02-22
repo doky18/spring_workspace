@@ -89,11 +89,11 @@
 									        			</div>
 									        		</div>
 												</td>
-											</tr>						                
-						                    <tr>
-						                        <td>183</td>
-						                        <td>John Doe</td>
-						                    </tr>
+											</tr>
+											
+											<template v-for="category in categoryList">						                
+						                    	<row :key="category.category_idx" :obj="category"/>
+						                    </template>
 						                </tbody>
 						            </table>
 						        </div>
@@ -147,31 +147,35 @@
 	<%@ include file="../inc/footer_link.jsp" %>
 	<script type="text/javascript">
 		let app1;
-		let key=0;
 		
-		const imagebox={
+		//2. row template 등록하기
+		//3. body 영역에 등록하기
+		//4. props, data 만지기
+		//5. template에 변수 지정
+		const row={
 			template:`
-				<div class="box-style">
-					<div>X</div>
-					<img :src="json.binary" />
-				</div>
+				<tr>
+					<td>{{category.category_idx}}</td>
+					<td>{{category.category_name}}</td>
+				</tr>
 			`,
 			props:["obj"],
 			data(){
 				return{
-					json:this.obj
+					category:this.obj
 				};
 			}
 		};
 		
+		//1.vue app1 등록하기--> row 등록
 		app1=new Vue({
 			el:"#app1",
 			components:{
-				imagebox
+				row
 			},
 			data:{
 				count:5,
-				imageList:[]  //files(read only) 배열의 정보를  담아놓을 배열
+				categoryList:[]  //files(read only) 배열의 정보를  담아놓을 배열
 			}
 		});
 		
@@ -242,17 +246,22 @@
 			
 		}
 		
+		function getCategoryList() {
+			//서버에서 비동기로 가져다가, app1의 categoryList에 대입
+			$.ajax({
+				url:"/admin/rest/category",
+				type:"get",
+				success:function(result, status, xhr){
+					app1.categoryList = result;s
+				}
+				
+			});
+		}
+		
 		//서머노트 적용하기 
 		$(function(){
-			$("#detail").summernote({
-				height:200
-			});
-			
-			//파일에 이벤트 연결 
-			$("input[name='file']").change(function(){
-				console.log(this.files);
-				preview(this.files);
-			});
+			//비동기로 카테고리 목록 가져오기
+			getCategoryList();
 			
 			//등록 이벤트 연결 
 			$("#bt_regist").click(function(){
