@@ -2,9 +2,68 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:beans="http://www.springframework.org/schema/beans"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jee="http://www.springframework.org/schema/jee"
+	xmlns:p="http://www.springframework.org/schema/p"
+	
+	xsi:schemaLocation="
+	http://www.springframework.org/schema/jee https://www.springframework.org/schema/jee/spring-jee.xsd
+	http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd
+	http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
+	
+	<!-- 데이터베이스 종류 선택 -->
+	<jee:jndi-lookup 
+		id="dataSource" 
+		jndi-name="jdbc/mysql"
+		resource-ref="true"/>
+	
+	<!-- 
+		트랜잭션 메니저 선택 (스프링이 지원하는...) 
+		사용기술: jdbc 			- DataSourceTransasctionManager 
+		사용기술: mybatis 	- DataSourceTransasctionManager
+		사용기술: hibernate 	- HibernateTransasctionManager
+	-->
+	<beans:bean 
+		id="transactionManager" 
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager"
+		p:dataSource-ref="dataSource"/>					
+	
+	<beans:bean 
+		id="sqlSessionFactoryBean" 
+		class="org.mybatis.spring.SqlSessionFactoryBean"
+		p:dataSource-ref="dataSource"
+		p:configLocation="classpath:com/edu/springshop/mybatis/config.xml"/>
+		
+	<beans:bean 
+		id="sqlSessionTemplate" 
+		class="org.mybatis.spring.SqlSessionTemplate">
+		<beans:constructor-arg name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
+	</beans:bean>			
+	
+	<context:component-scan base-package="com.edu.springshop.model"/>
+	
+	<!-- 파일 업로드를 위한 빈 등록 -->
+	<beans:bean
+		id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver"
+		p:maxUploadSizePerFile="3145728"/>	
+		
+	<!-- jackson data binder 등록 : json과 자바객체 사이의 자동 변환기 (Converter) -->
+        <beans:bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+            <beans:property name="messageConverters">
+                <beans:list value-type="java.util.ArrayList">
+                    <beans:ref bean="mappingJackson2HttpMessageConverter"/>
+                </beans:list>
+            </beans:property>
+        </beans:bean>
 
-			
+        <beans:bean id="mappingJackson2HttpMessageConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+            <beans:property name="supportedMediaTypes">
+                <beans:value>application/json;charset=utf-8</beans:value>
+            </beans:property>
+        </beans:bean>
+    <!-- jackson data binder 등록 -->
+					 
 </beans>
