@@ -1,41 +1,57 @@
+
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE log4j:configuration PUBLIC "-//APACHE//DTD LOG4J 1.2//EN" "log4j.dtd">
 <log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
 
-	<!-- Appenders -->
-	<appender name="console" class="org.apache.log4j.ConsoleAppender">
-		<param name="Target" value="System.out" />
-		<layout class="org.apache.log4j.PatternLayout">
-			<param name="ConversionPattern" value="%-5p: %c - %m%n" />
-		</layout>
-	</appender>
-	
-	<!-- Application Loggers -->
-	<logger name="com.edu.springshop">
-		<level value="info" />
-	</logger>
-	
-	<!-- 3rdparty Loggers -->
-	<logger name="org.springframework.core">
-		<level value="info" />
-	</logger>
-	
-	<logger name="org.springframework.beans">
-		<level value="info" />
-	</logger>
-	
-	<logger name="org.springframework.context">
-		<level value="info" />
-	</logger>
+	  <!-- 
+        System.out.println()은  개발할때는 잘 못느끼지만, 대형 어플리케이션 모든 코드마다 이 방법으로 로그를 출력하게 되면,
+        개발이 끝난 후 성능 저하를 방지하기 위해 일일이 코드를 열어서 주석으로 막아야 한다. 그러다가 운영 중 또 에러가 발생하면 
+        또 해당 코드를 찾아가서 주석을 풀어줘야 한다. 유지보수성이 떨어짐
 
-	<logger name="org.springframework.web">
-		<level value="info" />
-	</logger>
+        해결책)로거를 이용한다.
+                로거를 이용하게 되면, 개발이 끝난 후 해당 로거를 주석으로 막는게 아니라 설정으로 조절할 수 있다.
 
-	<!-- Root Logger -->
-	<root>
-		<priority value="warn" />
-		<appender-ref ref="console" />
-	</root>
-	
+        로거레벨은 심각도 수준을 기준으로 아래의 순서를 가진다.
+        로거레벨) TRACE DEBUG INFO WARN ERROR FATAL
+
+     -->
+
+    <!-- Appenders -->
+    <appender name="console" class="org.apache.log4j.ConsoleAppender">
+        <param name="Target" value="System.out" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%-5p: %c - %m%n" />
+        </layout>
+    </appender>
+
+    <!-- Application Loggers -->
+    <logger name="com.edu.springshop">
+        <level value="trace" />
+    </logger>
+
+    <!-- 3rdparty Loggers -->
+    <!-- 
+    <logger name="org.springframework.core">
+        <level value="info" />
+    </logger>
+
+    <logger name="org.springframework.beans">
+        <level value="info" />
+    </logger>
+
+    <logger name="org.springframework.context">
+        <level value="info" />
+    </logger>
+
+    <logger name="org.springframework.web">
+        <level value="info" />
+    </logger>
+     -->
+
+    <!-- Root Logger -->
+    <root>
+        <priority value="info" />
+        <appender-ref ref="console" />
+    </root>
+
 </log4j:configuration>

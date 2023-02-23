@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Pimg">
+	
+	<select id="selectAll" resultType="Pimg">
+		select * from pimg
+	</select>
+	
+	<!-- 해당 상품에 소속된 하위 이미지 가져오기 
+		ProductMapper.xml의 resultMap에서  호출-->	
+	<select id="selectByProduct" resultType="Pimg" parameterType="int">
+		select * from pimg where product_idx=#{product_idx}
+	</select>
+
+	<insert id="insert" parameterType="Pimg">
+		insert into pimg(product_idx, filename) values(#{product.product_idx}, #{filename})
+	</insert>	
+	
+	<delete id="delete" parameterType="int">
+		delete from pimg where product_idx=#{product_idx}
+	</delete>
+	
+</mapper>
+
+
+
+
+

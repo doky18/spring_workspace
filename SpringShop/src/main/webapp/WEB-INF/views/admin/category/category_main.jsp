@@ -46,7 +46,7 @@
 				<div class="container-fluid">
 					<div class="row mb-2">
 						<div class="col-sm-6">
-							<h1 class="m-0">상품등록</h1>
+							<h1 class="m-0">카테고리 관리</h1>
 						</div>
 						<!-- /.col -->
 						<div class="col-sm-6">
@@ -82,18 +82,19 @@
 												<td colspan="2">
 									        		<div class="form-group row">
 									        			<div class="col-sm-9">
-										                    <input type="text" name="category_name" class="form-control" placeholder="Search">
+										                    <input type="text" name="category_name" class="form-control" placeholder="카테고리 입력">
 									        			</div>
 									        			<div class="col-sm-3">
 										                    <button type="button" class="btn btn-danger" id="bt_regist">등록</button>
 									        			</div>
 									        		</div>
 												</td>
-											</tr>
+											</tr>	
 											
-											<template v-for="category in categoryList">						                
-						                    	<row :key="category.category_idx" :obj="category"/>
+											<template v-for="category in categoryList">					                
+												<row :key="category.category_idx" :obj="category"/>
 						                    </template>
+						                    
 						                </tbody>
 						            </table>
 						        </div>
@@ -109,17 +110,21 @@
 						    <div class="card">
 						    
 						        <div class="card-body">
+						        	<form id="form2">
+						        	<input type="hidden" name="_method">
+						        	<input type="hidden" name="category_idx">
 					        		<div class="form-group row">
 					        			<div class="col-6">
-						                    <input type="text" name="table_search" class="form-control" >
+						                    <input type="text" name="category_name" class="form-control" >
 					        			</div>
 					        			<div class="col-3">
-						                    <button type="button" class="btn btn-danger" >수정</button>
+						                    <button type="button" class="btn btn-danger" id="bt_edit">수정</button>
 					        			</div>
 					        			<div class="col-3">
-						                    <button type="button" class="btn btn-danger" >삭제</button>
+						                    <button type="button" class="btn btn-danger" id="bt_del">삭제</button>
 					        			</div>
 					        		</div>
+					        		</form>
 						        </div>
 						        
 						    </div>
@@ -148,15 +153,11 @@
 	<script type="text/javascript">
 		let app1;
 		
-		//2. row template 등록하기
-		//3. body 영역에 등록하기
-		//4. props, data 만지기
-		//5. template에 변수 지정
 		const row={
 			template:`
 				<tr>
 					<td>{{category.category_idx}}</td>
-					<td>{{category.category_name}}</td>
+					<td @click="getDetail(category)"><a href="#">{{category.category_name}}</a></td>					
 				</tr>
 			`,
 			props:["obj"],
@@ -164,10 +165,17 @@
 				return{
 					category:this.obj
 				};
+			},
+			methods:{
+				getDetail:function(category){
+					//우측 상세보기 영역에 데이터 출력 
+					$("#form2 input[name='category_idx']").val(category.category_idx);//category_idx
+					$("#form2 input[name='category_name']").val(category.category_name);//category_name
+				}
 			}
+			
 		};
 		
-		//1.vue app1 등록하기--> row 등록
 		app1=new Vue({
 			el:"#app1",
 			components:{
@@ -175,54 +183,11 @@
 			},
 			data:{
 				count:5,
-				categoryList:[]  //files(read only) 배열의 정보를  담아놓을 배열
+				categoryList:[]
 			}
 		});
 		
-		/*------------------------------------------
-		중복된 이미지체크
-		------------------------------------------*/
-		function checkDuplicate(filename){
-			let count=0;
-			
-			for(let i=0;i<app1.imageList.length;i++){
-				let json=app1.imageList[i];
-				if(json.name==filename){ //중복발견..
-					count++;
-					break;
-				}
-			}
-			return count;
-		}
-		
-		/*------------------------------------------
-		미리보기
-		------------------------------------------*/
-		function preview(files){
-			
-			//이미지 화면에 출력
-			for(let i=0;i<files.length;i++){
-				let file = files[i];
-				
-				if(checkDuplicate(file.name) <1){ //중복된 이미지가 없을때만...
-					let reader = new FileReader();//스트림 생성
-					reader.onload=(e)=>{
-						
-						key++; //사용자가 이미지를 선택할때마다 1씩 증가하여 중복을 불허한다
-						
-						let json=[]; // imageList배열에 복합적인 정보를 담아놓기 위해 
-						json['key']=key;//추후 이미지 삭제시 기준값으로 사용예정 
-						json['name']=file.name; //중복이미지가 추가되지 않도록... 
-						json['binary']=e.target.result; //src에 대입할 바이너리 정보 
-						json['file']=file; //전송할때 파라미터에 심을 파일
-						
-						app1.imageList.push(json);
-					};
-					reader.readAsDataURL(file);//파일읽기
-				}
-			}
-		}
-		
+
 		/*------------------------------------------
 		등록
 		------------------------------------------*/
@@ -232,40 +197,114 @@
 				type:"post",
 				data:{
 					category_name:$("input[name='category_name']").val()
-				},
-				//서버로부터 전송된 HTTP 응답 헤더 정보가 성공일 때 반응
+				}, 
+				//서버로부터 전송된 HTTP 응답 헤더 정보가 성공일때 반응
 				success:function(result, status, xhr){
-					alert(result.msg);			//{code:, msg}
-					console.log(result);
+					alert(result.msg); // {code:,  msg:"성공"}
+					getCategoryList();
 				},
-				//서버로부터 전송된 HTTP 응답 헤더 정보가 실패일 때 반응
-				error:function(xhr, staus, err){
+				
+				//서버로부터 전송된 HTTP 응답 헤더 정보가 실패일때 반응
+				error:function(xhr, status, err){
 					alert("에러에요"+err);
+				}
+				
+			});			
+		}
+		
+		
+		function getCategoryList(){
+			//서버에서 비동기로 가져다가,  app1의  categoryList 에 대입 
+			$.ajax({
+				url:"/admin/rest/category",
+				type:"get",
+				success:function(result, status, xhr){
+					app1.categoryList = result;										
+				}
+			});			
+		}
+		
+		//수정요청 
+		//html의 form 태그는 GET/POST 만 지원...
+		function edit(){
+			//히든에 들어있는  _method 값을  PUT으로 놓자 
+			$("#form2 input[name='_method']").val("PUT");
+			
+			$("#form2").attr({
+				action:"/admin/category/edit",
+				method:"POST"
+			});
+			$("#form2").submit();
+		}
+		
+		
+		//비동기방식의 수정 요청 
+		function editAsync(){
+			if(!confirm("수정하시겠습니까?")){
+				return;
+			}
+			
+			//전송 데이터를 ajax의 형식으로 전송 
+			let json={};
+			json['category_idx']=$("#form2 input[name='category_idx']").val();
+			json['category_name']=$("#form2 input[name='category_name']").val();
+			
+			$.ajax({
+				url:"/admin/rest/category",
+				type:"PUT",
+				contentType:"application/json;charset=utf-8", /*header 정보구성*/
+				//웹상의 데이터 교환시 데이터형식은 무조건, 문자열이 되어야 한다..
+				//따라서 자바스크립트 내장객체인 json 자체는 전송대상이 될수 없다. 
+				//해결책: 문자열화 시키되 개발자가 일일이 수작업으로 하지말고, JSON.stringify()이용
+				data:JSON.stringify(json), /*body 정보구성*/
+				processData:false, /*query string화 여부*/
+				success:function(result, status, xhr){
+					console.log(result);
+					
+					//다시 목록 갱신 
+					
+				},
+				error:function(xhr, status, err){
+					
 				}
 			});
 			
 		}
 		
-		function getCategoryList() {
-			//서버에서 비동기로 가져다가, app1의 categoryList에 대입
+		function delAsync(){
+			if(!confirm("삭제하시겠습니까?")){
+				return;
+			}	
+			
 			$.ajax({
-				url:"/admin/rest/category",
-				type:"get",
+				url:"/admin/rest/category/"+$("#form2 input[name='category_idx']").val(),
+				type:"DELETE",
 				success:function(result, status, xhr){
-					app1.categoryList = result;s
+					getCategoryList();
+				},
+				error:function(xhr, status, err){
+					
 				}
-				
 			});
 		}
 		
+		
 		//서머노트 적용하기 
 		$(function(){
+			
 			//비동기로 카테고리 목록 가져오기
 			getCategoryList();
 			
 			//등록 이벤트 연결 
 			$("#bt_regist").click(function(){
 				regist();
+			});
+			$("#bt_edit").click(function(){
+				//edit();
+				editAsync();
+			});
+			$("#bt_del").click(function(){
+				delAsync();
 			});
 			
 		});

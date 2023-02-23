@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.js"></script>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+
+    <!-- Popper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+
+
+    <script>
+        //인스턴스 만들기
+        let app1;
+        function init() {
+            app1 = new Vue({
+                el: "#tbody",		//body가 아니라 tbody 영역에만 영향을 미치는 중. 그래서 버튼은 이걸로 연결 ㄴ
+                data:{
+                	count:3,
+                	categoryList:[]
+                }
+            });
+            console.log("app1 is ", app1);
+        }
+        function getCategoryList() {
+			//비동기 통신으로 json을 가져와서, app1을 보유한 data 속성에 반영해보기 
+			$.ajax({
+				url:"/vue/category.jsp",
+				type:"GET",
+				success:function(result, status, xhr){
+					console.log(result);
+					app1.categoryList=result;
+				}
+			});
+		}
+        $(function () {
+            init();
+            $("#bt_load").click(function(){
+            	getCategoryList();
+            });
+        });
+    </script>
+</head>
+<body>
+	<button id="bt_load">불러오기</button>
+	<br>
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th>Category_idx</th>
+                <th>Category_name</th>
+            </tr>
+        </thead>
+        <tbody id="tbody">
+            <tr v-for="(category, i) in categoryList">
+                <td>{{category.category_idx}}</td>
+                <td>{{category.category_name}}</td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

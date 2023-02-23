@@ -65,5 +65,9 @@
             </beans:property>
         </beans:bean>
     <!-- jackson data binder 등록 -->
+    
+    <beans:bean
+    		id="fileManager"
+    		class="com.edu.springshop.util.FileManager" />
 					 
 </beans>

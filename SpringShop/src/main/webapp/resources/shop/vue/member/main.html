@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.js"></script>
+<script type="text/javascript">
+let app1;
+
+function regist(){
+	console.log($("#form1").serialize());
+	//폼을 전송하자 (post) 
+	$.ajax({
+		url:"/vue/member/regist.jsp",
+		type:"post", 
+		data:$("#form1").serialize(),
+		contentType:"application/x-www-form-urlencoded;charset=utf-8",
+		success:function(result, status, xhr){
+			console.log(result);	
+			getMemberList();
+		}
+	});
+}
+
+function getMemberList(){
+	$.ajax({
+		url:"/vue/member/list.jsp",
+		type:"get",
+		success:function(result, status, xhr){
+			console.log(result);
+			app1.memberList = result;
+		}
+	});	
+}
+
+
+function getMember(member){
+	//우측 상세보기 영역 채우기 
+	$("#form2 input[name='member_idx']").val(member.m_idx);//히든
+	
+	$("#form2 input[name='id']").val(member.m_id);
+	$("#form2 input[name='pass']").val(member.m_pass);
+	$("#form2 input[name='name']").val(member.m_name);
+	$("#form2 input[name='email']").val(member.m_email);
+}
+
+function del(){
+	let member_idx = $("#form2 input[name='member_idx']").val();
+	
+	$.ajax({
+		url:"/vue/member/delete.jsp?member_idx="+member_idx 
+		, type:"get"
+		, success:function(result, status, xhr){
+			console.log(result);
+			//다시 목록 갱신 
+			getMemberList();
+		}				
+	});	
+	
+}
+
+const Row={
+	template:`
+		<tr>
+			<td><a href="#" @click="getDetail(member)">{{member.m_id}}</a></td>
+			<td>{{member.m_pass}}</td>
+			<td>{{member.m_name}}</td>
+			<td>{{member.m_email}}</td>
+		</tr>
+	`, 
+	//외부에서 전달되는 속성값을 받기 위한 용도(파라미터 받기 위함)
+	//<row> 태그에 의해 인스턴스 생성시 전달되는 속성을 받을 수 있다
+	props:['member_idx','id', 'pass', 'name','email'],
+	data(){
+		return{
+			member:{
+				m_idx:this.member_idx,
+				m_id:this.id,  //props값은 this로 접근 가능 
+				m_pass:this.pass,
+				m_name:this.name, 
+				m_email:this.email
+			}
+		};
+	},
+	methods:{
+		getDetail:function(member){
+			getMember(member); //회원 1명 출력하기 함수호출
+		}
+		
+	},
+	
+	//생명주기 메서드들의 동작 방식 및 시점 알아보기 
+	//화면에 DOM이 나타나기 이전 시점 (=제어할 수 있는게 없)
+	beforeCreate:function(){
+		console.log("Row's beforeCreate called !!");
+	},
+	created:function(){
+		console.log("Row's created called !!");
+	},
+	
+	beforeMount:function(){
+		console.log("Row's beforeMount called !!");
+	},
+	mounted:function(){
+		console.log("Row's mounted called !!");
+	},
+	
+	beforeUpdate:function(){
+		//데이터가 변경될때 이 메서드 호출됨, but 변경된 데이터가 화면에 
+		//반영되지는 않음..
+		console.log("Row's beforeUpdate called !!");
+	},
+	updated:function(){
+		console.log("Row's updated called !!");
+	},
+	
+	beforeDestory:function(){
+		console.log("Row's beforeDestory called !!");
+	},
+	destoryed:function(){
+		console.log("Row's destoryed called !!");
+	},
+	
+
+};
+
+function init(){
+	app1	= new Vue({ //뷰 인스턴스 생성
+		el:"#app1", 
+		components:{
+			"row":Row
+		},
+		data:{
+			memberList:[],
+			count:0
+		}, 
+		methods:{
+			setChange:function(){
+				this.memberList[i].
+				//this.memberList.push({});
+			}
+		}
+		
+	});
+}
+
+$(function(){
+	
+	init();
+	getMemberList();
+	
+	$("#bt_regist").click(function(){
+		regist();		
+	});
+	
+	$("#bt_del").click(function(){
+		del();		
+	});
+	
+	
+});
+
+</script>	
+</head>
+<body>
+	<div class="container" id="app1">
+		<div class="row m-3">
+			<div class="col-md-3 border">
+				<form id="form1">
+					<div class="form-group">
+						<input type="text" class="form-control" placeholder="Enter ID" name="id">
+					</div>		
+					<div class="form-group">
+						<input type="text" class="form-control" placeholder="Enter Pass" name="pass">
+					</div>		
+					<div class="form-group">
+						<input type="text" class="form-control" placeholder="Enter Name" name="name">
+					</div>		
+					<div class="form-group">
+						<input type="text" class="form-control" placeholder="Enter Email" name="email">
+					</div>
+							
+					<div class="form-group text-center">
+						<button type="button" class="btn btn-primary" id="bt_regist">등록</button>
+					</div>		
+				</form>		
+			</div>
+			<div class="col-md-6 border">
+			
+				<table class="table">
+					<thead class="thead-dark">
+						<tr>
+							<th>ID</th>
+							<th>Pass</th>
+							<th>Name</th>
+							<th>Email</th>
+						</tr>
+					</thead>
+					<tbody>
+						<template v-for="(member, index) in memberList">
+							<row
+							:key="member['member_idx']"
+							:member_idx="member['member_idx']"
+							:id="member['id']"
+							:pass="member['pass']"
+							:name="member['name']"
+							:email="member['email']"/>
+							
+						</template>
+					</tbody>
+				</table>
+			
+			</div>
+			<div class="col-md-3 border">
+				<form id="form2">
+					<input type="hidden" name="member_idx">
+					
+					<div class="form-group">
+						<input type="text" class="form-control" placeholder="Enter ID" name="id">
+					</div>		
+					<div class="form-group">
+						<input type="text" class="form-control" placeholder="Enter Pass" name="pass">
+					</div>		
+					<div class="form-group">
+						<input type="text" class="form-control" placeholder="Enter Pass" name="name">
+					</div>		
+					<div class="form-group">
+						<input type="text" class="form-control" placeholder="Enter Pass" name="email">
+					</div>
+							
+					<div class="form-group text-center">
+						<button type="button" class="btn btn-primary" id="bt_edit"  v-on:click="setChange()">수정</button>
+						<button type="button" class="btn btn-primary" id="bt_del">삭제</button>
+					</div>		
+				</form>		
+			</div>
+		</div>				
+	</div>
+</body>
+</html>
+
+

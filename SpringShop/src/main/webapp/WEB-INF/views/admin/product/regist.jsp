@@ -234,7 +234,8 @@
 		function regist(){
 			//파일 업로드를 커스텀
 			let formData = new FormData();
-			formData.append("category_idx", $("select[name='category_idx']").val());
+			//Product에서 private Category category; 로 줬기 때문에 category.category_idx를 넘겨줘야 받을 수 있음
+			formData.append("category.category_idx", $("select[name='category_idx']").val());		
 			formData.append("product_name", $("input[name='product_name']").val());
 			formData.append("brand", $("input[name='brand']").val());
 			formData.append("price", $("input[name='price']").val());
@@ -254,6 +255,7 @@
 				processData:false,		/*query string 사용여부*/
 				contentType:false,		/*application/x-www-form~~ 사용여부*/
 				success: function(result, status, xhr){
+					alert(result.msg);
 					console.log(result);
 				}
 			})
@@ -276,6 +278,10 @@
 			//등록이벤트 연결
 			$("#bt_regist").click(function(){
 				regist();
+			});
+			
+			$("#bt_list").click(function(){
+				location.href="/admin/product/list";
 			});
 		});
 	

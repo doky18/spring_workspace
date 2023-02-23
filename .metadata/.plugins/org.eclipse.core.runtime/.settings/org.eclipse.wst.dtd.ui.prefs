@@ -1,9 +1,12 @@
 content_assist_parameters_background=128,255,255
 content_assist_proposals_background=44,148,98
-dtdData=\#ff80ff | null | false | false | false | false
-dtdDefault=\#000000 | \#c0c0c0 | false | false | false | false
-dtdKeyword=\#ff0080 | null | false | false | false | false
-dtdTag=\#0080ff | null | false | false | false | false
-dtdTagName=\#004080 | null | false | false | false | false
+dtdComment=\#586E75 | null | null | true | null | null
+dtdData=\#839496 | null | null | null | null | null
+dtdDefault=\#839496 | null | null | null | null | null
+dtdKeyword=\#B58900 | null | null | null | null | null
+dtdString=\#2AA198 | null | null | null | null | null
+dtdSymbol=\#678CB1 | null | null | null | null | null
+dtdTag=\#268BD2 | null | null | null | null | null
+dtdTagName=\#268BD2 | null | null | null | null | null
 eclipse.preferences.version=1
 org.eclipse.wst.sse.ui.custom_templates=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?><templates/>

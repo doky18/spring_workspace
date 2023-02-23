@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Insert title here</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.slim.min.js"></script>
+
+    <!-- Popper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        //vue 인스턴스 한개를 만들어, app1 영역을 렌더링 하자
+        function init(){
+            let app1= new Vue({
+                //이 뷰 인스턴스가 제어할 대상 요소
+                el:"#app1",
+                data:{
+                    //json 안에 json
+                    fruit:{
+                    name:"apple",
+                    color:"red"
+                    }
+                },
+                methods:{
+                    //이 영역에 메서드 여러가지를 넣을 수 있음
+                    getName: function(){
+                        return this.fruit.name;
+                    },
+                    //1) 나의 사는 곳을 반환하는 메서드를 정의하고, 2)아래쪽에 렌더링도 하자
+                    getCity:function(){
+                        return "서울";
+                    },
+                    getLocation:function(loc){
+                        return loc;
+                    }
+                }
+            });
+        }
+
+        $(function(){
+            init();   
+        });
+
+    </script>
+
+</head>
+
+<body>
+    <!-- 이 영역은 Veu를 이용하여 렌더링 할 대상이 됨-->
+    <!-- 바디 영역과 뷰라는 인스턴스는 항상 연결되어있다-->
+    <div id="app1">
+
+        {{fruit.name}}은 {{fruit.color}} 색이다 <br>
+        <!-- methods 언급 대신 뒤에 ()만 붙이면 메서드 호출이 됨-->
+        {{getName()}}
+        {{getCity()}}
+        {{getLocation("마포")}}
+    </div>
+</body>
+
+</html>

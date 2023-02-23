@@ -3,6 +3,8 @@ package com.edu.springshop.model.category;
 import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -11,6 +13,7 @@ import com.edu.springshop.exception.CategoryException;
 
 @Repository
 public class MybatisCategoryDAO implements CategoryDAO{
+	private Logger logger=LoggerFactory.getLogger(this.getClass());
 	
 	/*1순위: 아이디, 2순위....자료형 등으로 찾아냄*/
 	@Autowired
@@ -37,6 +40,9 @@ public class MybatisCategoryDAO implements CategoryDAO{
 
 	@Override
 	public void update(Category category) throws CategoryException {
+		logger.info("dao's category_idx is "+category.getCategory_idx());
+		logger.info("dao's category_name is "+category.getCategory_name());
+		
 		int result=sqlSessionTemplate.update("Category.update", category);
 		if(result <1) {
 			throw new CategoryException("카테고리 수정실패");

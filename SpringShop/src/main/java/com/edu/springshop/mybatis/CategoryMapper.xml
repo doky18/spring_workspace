@@ -14,7 +14,7 @@
 		insert into category(category_name) values(#{category_name})
 	</insert>	
 	
-	<update id="update" parameterType="int">
+	<update id="update" parameterType="Category">
 		update category set category_name=#{category_name}
 		where category_idx=#{category_idx}
 	</update>
