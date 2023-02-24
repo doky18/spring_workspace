@@ -1,24 +1,28 @@
+<%@page import="com.edu.springshop.domain.Category"%>
 <%@page import="java.util.List"%>
 <%@ page contentType="text/html;charset=UTF-8"%>
-
+	<%
+		//카테고리 목록 가져오기
+		List<Category> categoryList=(List)request.getAttribute("categoryList");
+	%>
     <header class="header">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-xl-3 col-lg-2">
                     <div class="header__logo">
-                        <a href="/"><img src="/img/logo.png" alt=""></a>
+                        <a href="/"><img src="/resources/shop/img/logo.png" alt=""></a>
                     </div>
                 </div>
                 <div class="col-xl-6 col-lg-7">
                     <nav class="header__menu">
                         <ul>
                             <li class="active"><a href="./index.html">Home</a></li>
-                            <%//for(int i=0;i<categoryList.size();i++){ %>
-                            <%// Category category=categoryList.get(i);%>
-                            <li><a href="#"><%//=category.getCategory_name() %></a></li>
-                            <%//} %>
+                            <%for(int i=0;i<categoryList.size();i++){ %>
+                            <%Category category=categoryList.get(i);%>
+                            <li><a href="#"><%=category.getCategory_name() %></a></li>
+                            <%} %>
                             
-                            <li><a href="/shop.jsp">Shop</a></li>
+                            <li><a href="/shop/list">Shop</a></li>
                             <li><a href="#">Pages</a>
                                 <ul class="dropdown">
                                     <li><a href="./product-details.html">Product Details</a></li>
@@ -35,11 +39,10 @@
                 <div class="col-lg-3">
                     <div class="header__right">
                         <div class="header__right__auth">
-                        
-	                            <a href="/member/loginform.jsp">Login</a>
-	                            <a href="/member/joinform.jsp">Register</a>
-	                            <a href="/member/logout.jsp">logout</a>
-                            
+
+                            <a href="/member/loginform.jsp">Login</a>
+                            <a href="/member/joinform.jsp">Register</a>
+
                         </div>
                         <ul class="header__right__widget">
                             <li><span class="icon_search search-switch"></span></li>
@@ -47,17 +50,11 @@
                                 <div class="tip">2</div>
                             </a></li>
                             <li>
-                            	<%if(session.getAttribute("member")==null){ %>
-	                            	<a href="javascript:alert('로그인이 필요한 서비스입니다');">
-	                            		<span class="icon_bag_alt"></span>
-	                                	<div class="tip">2</div>
-	                                </a>
-                                <%}else{ %>
-	                            	<a href="/payment/cartlist.jsp">
-	                            		<span class="icon_bag_alt"></span>
-	                                	<div class="tip">2</div>
-	                                </a>
-                                <%} %>
+ 
+                            	<a href="/payment/cartlist.jsp">
+                            		<span class="icon_bag_alt"></span>
+                                	<div class="tip">2</div>
+                                </a>
                                 
                             </li>
                         </ul>
@@ -69,3 +66,4 @@
             </div>
         </div>
     </header>
+    

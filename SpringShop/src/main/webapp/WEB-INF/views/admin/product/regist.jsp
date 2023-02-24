@@ -257,8 +257,17 @@
 				success: function(result, status, xhr){
 					alert(result.msg);
 					console.log(result);
+				},
+				error:function(xhr, status, err){
+					console.log("xhr", xhr);
+					console.log("status", status);
+					console.log("err", err);
+					
+					//JSON.stringfy()		json  --> string 왜 바꿨나? string으로 전송하려고. 전송은 문자로 가야하니까
+					let json = JSON.parse(xhr.responseText);		//string  --> json
+					alert(json.msg);
 				}
-			})
+			});
 		}
 		
 		//서머노트 적용하기 

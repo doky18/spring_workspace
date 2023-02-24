@@ -27,6 +27,7 @@ public class MybatisProductDAO implements ProductDAO{
 	@Override
 	public void insert(Product product) throws ProductException{
 		int result=sqlSessionTemplate.insert("Product.insert", product);
+		//result =0; //throws를 배우기 위한 실행
 		if(result<1) {
 			throw new ProductException("상품등록 실패");
 		}

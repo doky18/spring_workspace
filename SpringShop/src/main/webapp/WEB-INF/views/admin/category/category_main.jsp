@@ -52,7 +52,7 @@
 						<div class="col-sm-6">
 							<ol class="breadcrumb float-sm-right">
 								<li class="breadcrumb-item"><a href="#">Home</a></li>
-								<li class="breadcrumb-item active">상품관리> 상품등록</li>
+								<li class="breadcrumb-item active">상품관리> 카테고리 관리</li>
 							</ol>
 						</div>
 						<!-- /.col -->
@@ -152,6 +152,7 @@
 	<%@ include file="../inc/footer_link.jsp" %>
 	<script type="text/javascript">
 		let app1;
+		let selectedRow;		//현재 선택된 row
 		
 		const row={
 			template:`
@@ -171,6 +172,10 @@
 					//우측 상세보기 영역에 데이터 출력 
 					$("#form2 input[name='category_idx']").val(category.category_idx);//category_idx
 					$("#form2 input[name='category_name']").val(category.category_name);//category_name
+					
+					console.log(this);
+					selectedRow=this;
+				
 				}
 			}
 			
@@ -261,7 +266,8 @@
 				success:function(result, status, xhr){
 					console.log(result);
 					
-					//다시 목록 갱신 
+					//수정된 내용만 컴포넌트에 반영하기 
+					selectedRow.category=json;
 					
 				},
 				error:function(xhr, status, err){

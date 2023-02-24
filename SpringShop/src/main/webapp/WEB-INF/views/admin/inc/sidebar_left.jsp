@@ -17,7 +17,7 @@
 			</div>
 			<div class="info">
 
-				<a href="#" class="d-block"><%="doky"%></a>
+				<a href="#" class="d-block"><%="zino"%></a>
 			</div>
 		</div>
 
@@ -79,7 +79,7 @@
 						</a></li>
 						<li class="nav-item"><a href="/admin/product/registform"
 							class="nav-link"> <i class="far fa-circle nav-icon"></i>
-								<p>상품등록</p>
+								<p>상품관리</p>
 						</a></li>
 						<li class="nav-item"><a href="./index2.html" class="nav-link">
 								<i class="far fa-circle nav-icon"></i>
