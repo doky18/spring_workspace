@@ -189,6 +189,18 @@
             <version>1.9.5</version>
             <scope>runtime</scope>
         </dependency>
+        
+        <dependency>
+            <groupId>javax.mail</groupId>
+            <artifactId>mail</artifactId>
+            <version>1.4.7</version>
+        </dependency>
+        
+        <dependency>
+		<groupId>org.springframework</groupId>
+		<artifactId>spring-context-support</artifactId>
+		<version>4.3.30.RELEASE</version>
+		</dependency>
 		<!-- 새로 추가함======================================= -->
 
 
