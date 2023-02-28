@@ -9,6 +9,7 @@
 		<typeAlias type="com.edu.springshop.domain.Pimg" alias ="Pimg"/>
 		<typeAlias type="com.edu.springshop.domain.Cart" alias ="Cart"/>
 		<typeAlias type="com.edu.springshop.domain.Member" alias="Member"/>
+		<typeAlias type="com.edu.springshop.domain.Admin" alias="Admin"/>
 	</typeAliases>
 	
 	<mappers>
@@ -17,6 +18,7 @@
 		<mapper resource="com/edu/springshop/mybatis/PimgMapper.xml"/>
 		<mapper resource="com/edu/springshop/mybatis/CartMapper.xml"/>
 		<mapper resource="com/edu/springshop/mybatis/MemberMapper.xml"/>
+		<mapper resource="com/edu/springshop/mybatis/AdminMapper.xml"/>
 	</mappers>
 	
 </configuration>
