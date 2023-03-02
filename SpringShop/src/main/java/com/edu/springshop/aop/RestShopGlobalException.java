@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.edu.springshop.exception.EmailException;
+import com.edu.springshop.exception.HashException;
 import com.edu.springshop.exception.MemberException;
 import com.edu.springshop.util.Message;
 
@@ -17,19 +18,46 @@ import com.edu.springshop.util.Message;
 //만일 해당 @ExceptionHandler가 지정되지 않으면,
 //이 예외 객체가 처리할 것임
 //@RestControllerAdive 자체가 RestController 에서 발생하는 예외만 처리한다는 보장을 하지 않는다
+
+//Rest 한 것만 잡기 
+
 @RestControllerAdvice(annotations = RestController.class)		//ControllerAdvice + @ResponseBody
-public class RestGlobalException {
+public class RestShopGlobalException {
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	
-	@ExceptionHandler(value= {MemberException.class, EmailException.class})
-	public ResponseEntity<Message> handle(RuntimeException e){
+	@ExceptionHandler(MemberException.class)
+	public ResponseEntity<Message> handle(MemberException e){
 		logger.info("글로벌 예외~감지~");
 		
 		Message message = new Message();
-		message.setMsg("회원가입 실패");
+		message.setMsg("쇼핑몰 글로벌 예외"+e.getMessage());
 		
 		ResponseEntity entity=new ResponseEntity<Message>(message, HttpStatus.INTERNAL_SERVER_ERROR);
 		return entity;
 	};
+	
+	 //글로벌 익셉션으로 이사
+		@ExceptionHandler(EmailException.class)
+		public ResponseEntity<Message> handle(EmailException e){
+			logger.info("글로벌 예외~감지~"+e);
+			
+			Message message = new Message();
+			message.setMsg("쇼핑몰 글로벌 예외"+e.getMessage());
+			
+			ResponseEntity entity=new ResponseEntity<Message>(message, HttpStatus.INTERNAL_SERVER_ERROR);
+			return entity;
+		};
 
+		
+		 //글로벌 익셉션으로 이사
+		@ExceptionHandler(HashException.class)
+		public ResponseEntity<Message> handle(HashException e){
+			logger.info("쇼핑몰 글로벌 예외 감지"+e);
+			
+			Message message = new Message();
+			message.setMsg("쇼핑몰 글로벌 예외"+e.getMessage());
+			
+			ResponseEntity entity=new ResponseEntity<Message>(message, HttpStatus.INTERNAL_SERVER_ERROR);
+			return entity;
+		};
 }

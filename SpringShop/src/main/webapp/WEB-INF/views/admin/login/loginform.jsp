@@ -31,7 +31,8 @@
 		        </div>
 		        <!-- /.card-body -->
 		        <div class="card-footer">
-		            <button type="button" class="btn btn-info" id="bt_login">Sign in</button>
+		            <button type="button" class="btn btn-info" id="bt_loginAsync">비동기Rest 로그인</button>
+		            <button type="button" class="btn btn-info" id="bt_login">동기 로그인</button>
 		            <button type="button" class="btn btn-default float-right">Cancel</button>
 		        </div>
 		        <!-- /.card-footer -->
@@ -42,22 +43,40 @@
 	<!-- ./wrapper -->
 	<%@ include file="../inc/footer_link.jsp" %>
 	<script type="text/javascript">
-		function login(){
-			let formData = $("#form1").serialize();
-			$.ajax({
-				url:"/admin/rest/login/admin",
-				type:"POST",
-				data: formData,
-				success:function(result, status, xhr){
-					alert(result.msg);
-					location.href="/admin/main"
-				},
-				error:function(xhr, status, err){
-					let json = JSON.parse(xhr.responseText);
-					alert(json.msg);
-				}
+	//비동기
+	function loginAsync(){
+		let formData = $("#form1").serialize();
+		$.ajax({
+			url:"/admin/rest/login/admin",
+			type:"POST",
+			data: formData,
+			success:function(result, status, xhr){
+				alert(result.msg);
+				location.href="/admin/main"
+			},
+			
+			error:function(xhr, status, err){
+				let json = JSON.parse(xhr.responseText);
+				alert(json.msg);
+			}
+		});
+	}
+
+	//동기
+	function login(){
+		$("#form1").attr({
+			action:"/admin/login",
+			method:"POST"
+		});
+		$("#form1").submit();
+	}
+		
+		
+		$(function(){
+			$("#bt_loginAsync").click(function(){
+				loginAsync();	
 			});
-		}
+		});
 		
 		$(function(){
 			$("#bt_login").click(function(){

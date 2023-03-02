@@ -57,13 +57,18 @@
 			<aop:pointcut expression="execution(public * com.edu.springshop.shop.controller..*(..))" id="categoryPointcut"/>
 			<!--                                                                                                                                  -->
 			<aop:around method="getCategoryList" pointcut-ref="categoryPointcut"/>
-			<!-- 12:15   around : 전 후로                                                                       -->
+			<!-- 2/27,28 12:15   around : 전 후로                                                                       -->
 		</aop:aspect>
 	</aop:config>
 	
-	<!-- 레스트 요청에 대한 글로벌 예외를 처리할 빈 등록 
+	<!-- 레스트 요청에 대한 글로벌 예외를 처리할 빈 등록 : json등의 데이터로 결과를 보여줌 -->
 	<beans:bean 
-			id="globalException"
-			class="com.edu.springshop.aop.RestGlobalException"></beans:bean> -->
+			id="restShopGlobalException"
+			class="com.edu.springshop.aop.RestShopGlobalException"/>
+			
+	<!-- 글로벌 예외이지만 jsp로 결과를 보여주는 객체 -->
+	<beans:bean
+			id="shopGlobalException"	
+			class="com.edu.springshop.aop.ShopGlobalException"/>
 	
 </beans:beans>

@@ -40,6 +40,7 @@ public class RestAdminController {
 		return entity;
 	}
 	
+	/* 예외처리에 대한 중복을 방지하기 위해서 이 페이지를 막음
 	@ExceptionHandler(AdminException.class)
 	public ResponseEntity<Message> handle(AdminException e){
 		Message message = new Message();
@@ -48,7 +49,7 @@ public class RestAdminController {
 		
 		return entity;
 	}
-	
+	*/
 	
 	
 	

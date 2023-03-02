@@ -14,7 +14,7 @@ public class AdminServiceImpl implements AdminService{
 	private AdminDAO adminDAO;
 
 	@Override
-	public Admin select(Admin admin) throws AdminException{
+	public Admin select(Admin admin) throws AdminException{		//관리자를 찾지 못하면 예외처리~
 		return adminDAO.select(admin);
 	}
 

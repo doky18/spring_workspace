@@ -1,5 +1,7 @@
 package com.edu.springshop.shop.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +26,7 @@ public class RestMemberController {
 	
 	//회원가입 요청 처리 
 	@PostMapping("/member")
-	public ResponseEntity<Message> regist(Member member){
+	public ResponseEntity<Message> regist(HttpServletRequest request, Member member){
 		//3단계: 일 시키기
 		memberService.regist(member);
 		Message message = new Message();
@@ -34,7 +36,7 @@ public class RestMemberController {
 		return entity;
 	} 
 
-	
+	/*
 	 //글로벌 익셉션으로 이사
 	@ExceptionHandler(value= {MemberException.class, EmailException.class, HashException.class})
 	public ResponseEntity<Message> handle(RuntimeException e){
@@ -45,7 +47,7 @@ public class RestMemberController {
 		ResponseEntity entity=new ResponseEntity<Message>(message, HttpStatus.INTERNAL_SERVER_ERROR);
 		return entity;
 	};
-	
+	*/
 	
 }
 

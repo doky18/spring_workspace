@@ -29,11 +29,6 @@
 	
 	<context:component-scan base-package="com.edu.springshop.admin.controller" />
 	
-	<!-- 관리자와 관련된 글로벌 예외 빈 등록 -->
-	<beans:bean 
-			id="adminGlobalException" 
-			class="com.edu.springshop.aop.AdminGlobalException"/>
-	
 	<!-- 관리자의 로그인 체크를 위한 빈 설정 -->
 	<beans:bean 
 			id="adminLoginCheckAdvice"
@@ -47,6 +42,15 @@
 		</aop:aspect>
 	</aop:config>
 	
+	<!-- 관리자와 관련된 글로벌 예외 빈 등록 -->
+	<beans:bean
+			id="restAdminGlobalException"
+			class="com.edu.springshop.aop.RestAdminGlobalException"/>
+			
+	<beans:bean
+			id="adminGlobalException"
+			class="com.edu.springshop.aop.AdminGlobalException"/>
+
 	
 	
 	
