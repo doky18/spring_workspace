@@ -1,7 +1,5 @@
 package com.edu.springshop.admin.controller;
 
-import java.io.File;
-
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
@@ -14,7 +12,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.edu.springshop.domain.Product;
 import com.edu.springshop.exception.PimgException;
@@ -98,7 +95,6 @@ public class RestProductController {
 			return entity;
 		}
 }
-
 
 
 

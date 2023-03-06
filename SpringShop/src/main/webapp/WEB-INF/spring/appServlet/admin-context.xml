@@ -34,13 +34,14 @@
 			id="adminLoginCheckAdvice"
 			class="com.edu.springshop.aop.AdminLoginCheckAdvice"/>
 	
-	<!-- 관점 등록 AOP 설정 -->
+	<!-- 관점 등록 AOP 설정 
 	<aop:config>
 		<aop:aspect ref="adminLoginCheckAdvice">
 			<aop:pointcut expression="execution(public * com.edu.springshop.admin.controller..*(..))" id="adminLoginCheckPontcut"/>
 			<aop:around method="sessionCheck" pointcut-ref="adminLoginCheckPontcut"/>
 		</aop:aspect>
-	</aop:config>
+	</aop:config>-->
+
 	
 	<!-- 관리자와 관련된 글로벌 예외 빈 등록 -->
 	<beans:bean
