@@ -201,6 +201,21 @@
 		<artifactId>spring-context-support</artifactId>
 		<version>4.3.30.RELEASE</version>
 		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/javax.websocket/javax.websocket-api -->
+		<dependency>
+		    <groupId>javax.websocket</groupId>
+		    <artifactId>javax.websocket-api</artifactId>
+		    <version>1.1</version>
+		    <scope>provided</scope>
+		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/org.springframework/spring-websocket -->
+		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-websocket</artifactId>
+		    <version>4.3.30.RELEASE</version>
+		</dependency>
 		<!-- 새로 추가함======================================= -->
 
 

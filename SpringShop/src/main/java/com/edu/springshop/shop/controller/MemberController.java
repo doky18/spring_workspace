@@ -17,13 +17,14 @@ public class MemberController {
 	
 	@Autowired
 	private MemberService memberService;
-
+	
 	//회원가입 폼 요청처리
 	@GetMapping("/member/joinform")
 	public ModelAndView getJoinForm(HttpServletRequest request) {
 		
 		return new ModelAndView("shop/member/joinform");
-	}
+	} 
+	
 	//로그인 폼 요청처리
 	@GetMapping("/member/loginform")
 	public ModelAndView getLoginForm(HttpServletRequest request) {
@@ -31,27 +32,25 @@ public class MemberController {
 		return new ModelAndView("shop/member/loginform");
 	}
 	
-	//회원가입 요청처리
-	//HttpServletRequest를 넣어야 하는 이유? AOP적용을 위한 CategoryAdvice 코드에 요청을 낚아채어
-	//request를 사용중이므로
+	//회원가입 요청 처리 
+	//HttpServletRequest를 넣어야 하는이유?  AOP적용을 위한 CategoryAdvice 코드에
+	//요청을 낚아채어, request 를 사용중이므로...
 	@PostMapping("/member/regist")
 	public ModelAndView regist(HttpServletRequest request, Member member) {
-		//3단계: 회원가입이라는 추상적인 메서드 호출하면 됨
+		//3단계: 
 		memberService.regist(member);
-		
-		ModelAndView mav= new ModelAndView("redirect:/member/loginform");
-		
+		ModelAndView mav = new ModelAndView("redirect:/member/loginform");
 		return mav;
 	}
 	
+	//상담게시판 페이지 요청 처리 
+	@GetMapping("/member/chatform")
+	public ModelAndView getChatForm(HttpServletRequest request){
+		ModelAndView mav=new ModelAndView("shop/member/chat");
+		return mav;
+	}
 	
 }
-
-
-
-
-
-
 
 
 
