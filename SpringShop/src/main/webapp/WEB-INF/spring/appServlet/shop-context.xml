@@ -6,11 +6,12 @@
 	xmlns:aop="http://www.springframework.org/schema/aop"
 	xmlns:websocket="http://www.springframework.org/schema/websocket"
 	
+	
 	xsi:schemaLocation="
 		http://www.springframework.org/schema/websocket https://www.springframework.org/schema/websocket/spring-websocket.xsd
 		http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
-		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
 
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
@@ -28,63 +29,142 @@
 	</beans:bean>
 	
 	<context:component-scan base-package="com.edu.springshop.shop.controller" />
-
-	<!-- 공통관심사항인 Bell을 Advice로 등록하자 -->
-	<beans:bean 
-			id="bell" class="com.edu.springshop.aop.Bell"/>
 	
-	<!-- 공통관심사항인 CategoryAdvice를 Advice로 등록하자 -->
-	<beans:bean id="categoryAdvice" class="com.edu.springshop.aop.CategoryAdvice"/>
-
-	<!-- 학생을 등록한다 -->
-	<beans:bean id="student" class="com.edu.springshop.school.Student"/>
+	<!-- 공통관심 사항인 Bell을  Advice로 등록하자 -->
+	<beans:bean id="bell" class="com.edu.springshop.aop.Bell"/>
 	
-<!-- 	
-	관점(Aspect)을 정의하자 
+	<!-- 공통관심 사항인 CategoryAdivce를  Advice로 등록하자 -->
+	<beans:bean id="categoryAdvice" 
+		class="com.edu.springshop.aop.CategoryAdvice"/>
+	
+	<!-- 학생을 등록한다  -->
+	<beans:bean
+		id="student" 
+		class="com.edu.springshop.school.Student"/>
+		
+	<!-- 관점(Aspect)을 정의하자 -->
+	<!-- 	
 	<aop:config>
 		<aop:aspect ref="bell" id="bellAspect">
-		
-			지점등록
+			지점  등록
 			<aop:pointcut expression="execution(public * com.edu.springshop.school.Student..*(..))" id="bellPointcut"/>
 			
-			시점등록...어느 지점에 어느 시점에 관여할지..
-			<aop:before method="ding" pointcut-ref="bellPointcut"/>	bellpointcut 이전에!
+			시점 등록, 어느지점에 어느시점에 관여할지..
+			<aop:before method="ding" pointcut-ref="bellPointcut"/>
 		</aop:aspect>
-	</aop:config>
-	 -->
-	 
-	 
-		<!-- 쇼핑몰 카테고리 가져오기 관점 정의 -->
-	<aop:config>
+	</aop:config>		
+ 	-->
+ 	
+ 	<!-- 쇼핑몰 카테고리 가져오기 관점 정의 -->
+ 	<aop:config>
 		<aop:aspect ref="categoryAdvice" id="categoryAspect">
 			<aop:pointcut expression="execution(public * com.edu.springshop.shop.controller..*(..))" id="categoryPointcut"/>
-			<!--                                                                                                                                  -->
-			<aop:around method="getCategoryList" pointcut-ref="categoryPointcut"/>
-			<!-- 2/27,28 12:15   around : 전 후로                                                                       -->
-		</aop:aspect>
-	</aop:config>
+			<aop:around method="getCategoryList" pointcut-ref="categoryPointcut"/>				
+		</aop:aspect> 	 	
+ 	</aop:config>
 	
-	<!-- 레스트 요청에 대한 글로벌 예외를 처리할 빈 등록 : json등의 데이터로 결과를 보여줌 -->
+	<!-- Rest 요청에 대한 글로벌 예외를 처리할 빈 등록 
+			json 등의 데이터로 결과를 보여주는 예외 객체
+	-->
 	<beans:bean 
-			id="restShopGlobalException"
-			class="com.edu.springshop.aop.RestShopGlobalException"/>
-			
-	<!-- 글로벌 예외이지만 jsp로 결과를 보여주는 객체 -->
-	<beans:bean
-			id="shopGlobalException"	
-			class="com.edu.springshop.aop.ShopGlobalException"/>
-			
-	<!-- 웹소켓 핸들러 등록 -->
-	 <beans:bean id="chatHandler" class="com.edu.springshop.chat.ChatHandler"/>
-	 
-	 <!-- 웹소켓 설정 -->
-	 <websocket:handlers>
-	 	<websocket:mapping handler="chatHandler" path="/chat"/>
-		<websocket:handshake-interceptors>
-			 <beans:bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor"/>
-		</websocket:handshake-interceptors>	 	
-	 
-	 </websocket:handlers>
-	 
+		id="restShopGlobalException" 
+		class="com.edu.springshop.aop.RestShopGlobalException"/>
 	
+	<!-- 글로벌 예외 jsp로 결과를 보여주는 예외객체 -->
+	<beans:bean
+		id="shopGlobalException" 
+		class="com.edu.springshop.aop.ShopGlobalException"/>		 		
+ 
+ 	<!-- 웹소켓 핸들러 등록 -->
+ 	<beans:bean id="chatHandler" class="com.edu.springshop.chat.ChatHandler"/>
+ 	
+ 	<!-- 웹소켓 설정 -->
+	<websocket:handlers>
+		<websocket:mapping handler="chatHandler" path="/chat"/>	
+		<websocket:handshake-interceptors>
+			<beans:bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor"/>
+		</websocket:handshake-interceptors>				
+	</websocket:handlers> 
+ 	
+ 	<!-- 구글 로그인 관련 정보 등록  -->
+ 	<beans:bean id="googleLogin" class="com.edu.springshop.sns.GoogleLogin">
+ 		<!-- 1)인증화면 관련 링크 -->
+ 		<!-- 인증된 링크 -->
+ 		<beans:property name="endpoint" value="https://accounts.google.com/o/oauth2/v2/auth"></beans:property>
+ 	
+		<!-- google cloud platform에서 발급받은 client ID-->
+		<beans:property name="client_id" value="1089278232541-00umasat1splftrqld2k8k8coc7kmj5l.apps.googleusercontent.com"/>
+		
+		<!-- google cloud platform에서 발급받은 client Secret--> 		
+		<beans:property name="client_secret" value="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"/> 		
+		
+		<!-- Resource Owner 가 인증할때, 콜백받을 우리 웹사이트 URI -->
+		<beans:property name="redirect_uri" value="http://localhost:7777/sns/google/callback"/>
+ 	
+ 		<!-- callback 받을 때 구글이 우리에게 전달할 파라미터의 이름 -->
+ 		<beans:property name="response_type" value="code"/>
+ 		
+		<!-- Resource Owner 로부터 어떠한 정보를 수집할지 그 범위설정  -->
+		<beans:property name="scope" value="https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile"/>
+ 	
+ 	
+ 		<!-- 2)토큰요청 관련 링크 -->	
+ 		<beans:property name="token_request_url" value="https://oauth2.googleapis.com/token"/>
+ 		<!-- 모든 SNS 사업자가 같은 변수명을 쓴다 -->
+ 		<beans:property name="grant_type" value="authorization_code"/>
+ 		
+ 		<!-- 3) 회원정보 요청을 위한 url-->
+ 		<beans:property name="userinfo_url" value="https://www.googleapis.com/oauth2/v1/userinfo"></beans:property>	
+ 			
+ 	</beans:bean>
+ 	
+ 	
+	<!-- 카카오 로그인 관련 정보 등록  -->
+ 	<beans:bean id="kaKaoLogin" class="com.edu.springshop.sns.KaKaoLogin">
+ 		<!-- 1)인증화면 관련 링크 -->
+ 		<!-- 인증된 링크 -->
+ 		<beans:property name="endpoint" value="https://kauth.kakao.com/oauth/authorize"/>
+ 	
+		<!-- google cloud platform에서 발급받은 client ID-->
+		<beans:property name="client_id" value="fde446aa072ea223b950992b4fd01752"/>
+		
+		<!-- Resource Owner 가 인증할때, 콜백받을 우리 웹사이트 URI -->
+		<beans:property name="redirect_uri" value="http://localhost:7777/sns/kakao/callback"/>
+ 	
+ 		<!-- callback 받을 때 구글이 우리에게 전달할 파라미터의 이름 -->
+ 		<beans:property name="response_type" value="code"/>
+ 		<!-- 카카오는 scope 없음 -->
+ 		
+ 		<!-- 2)토큰요청 관련 링크 -->	
+ 		<beans:property name="token_request_url" value="https://kauth.kakao.com/oauth/token"/>
+ 		<!-- 모든 SNS 사업자가 같은 변수명을 쓴다 -->
+ 		<beans:property name="grant_type" value="authorization_code"/>
+ 		
+ 		<!-- 3) 회원정보 요청을 위한 url-->
+ 		<beans:property name="userinfo_url" value="https://kapi.kakao.com/v2/user/me"></beans:property>	
+ 			
+ 	</beans:bean>
 </beans:beans>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

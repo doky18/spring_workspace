@@ -1,4 +1,3 @@
-<%@page import="java.util.List"%>
 <%@ page contentType="text/html;charset=UTF-8"%>
 <!DOCTYPE html>
 <html lang="zxx">
@@ -37,6 +36,11 @@
 				            <input type="text" class="form-control" placeholder="Enter pass" name="pass">
 				        </div>
 				       
+				        <button type="button" class="btn btn-success" id="bt_google">Google로 로그인</button>
+				        
+				        <button type="button" class="btn btn-success" id="bt_naver">Naver로 로그인</button>
+				        <button type="button" class="btn btn-success" id="bt_kakao">KaKao로 로그인</button>
+				        
 				        <button type="button" class="btn btn-success" id="bt_login">Login</button>
 				        <button type="button" class="btn btn-success" id="bt_regist">신규가입</button>
 				        
@@ -65,8 +69,8 @@
 
 <!-- Js Plugins -->
 <%@ include file="../inc/footer_link.jsp" %>
-
 <script type="text/javascript">
+
 function regist(){
 	$("#form1").attr({
 		action:"/member/join.jsp",
@@ -75,28 +79,39 @@ function regist(){
 	$("#form1").submit();
 }
 
+function gotoAuthForm(sns){
+	$.ajax({
+		url:"/rest/member/authform/"+sns,
+		type:"get",
+		success:function(result, status, xhr){
+			console.log("인증주소는 ", result.msg);
+			location.href=result.msg;
+		}
+	});
+}
+
 $(function(){
-	
-	$("#bt_login").click(function(){
-		$("#form1").attr({
-			action:"/member/login.jsp",
-			method:"post"
-		});
-		$("#form1").submit();
+	$("#bt_google").click(function(){
+		//SNS 사업자가 미리 만들어놓은 인증화면 주소를 요청해야 한다.
+		//따라서 주소 및 파라미터명이 이미 정해져 있다..
+		//(어디에서 조사해야 하나? 구글 개발자 사이트에 공시되어 있다..)
+	gotoAuthForm("google");
 	});
-	
-	$("#bt_regist").click(function(){
-		//location.href="";
-		$(location).attr("href", "/member/joinform.jsp");
+});
+$(function(){
+	$("#bt_kakao").click(function(){
+	gotoAuthForm("kakao");
 	});
-	
+});
+$(function(){
+	$("#bt_naver").click(function(){
+	gotoAuthForm("naver");
+	});
 });
 </script>
 </body>
 
 </html>
-
-
 
 
 
