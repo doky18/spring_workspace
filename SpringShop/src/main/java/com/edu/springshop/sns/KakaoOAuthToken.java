@@ -2,7 +2,7 @@ package com.edu.springshop.sns;
 
 import lombok.Data;
 
-//구글 서버에서 전송받은 json 문자열을 자바의 객체로 담아놓기 위한 
+//카카오 서버에서 전송받은 json 문자열을 자바의 객체로 담아놓기 위한 
 @Data
 public class KakaoOAuthToken {
 	private String access_token;

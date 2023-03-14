@@ -98,16 +98,19 @@ $(function(){
 	gotoAuthForm("google");
 	});
 });
+
 $(function(){
 	$("#bt_kakao").click(function(){
 	gotoAuthForm("kakao");
 	});
 });
+
 $(function(){
 	$("#bt_naver").click(function(){
 	gotoAuthForm("naver");
 	});
 });
+
 </script>
 </body>
 

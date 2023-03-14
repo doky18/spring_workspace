@@ -2,6 +2,7 @@ package com.edu.springshop.shop.controller;
 
 
 import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -27,6 +28,8 @@ import com.edu.springshop.sns.GoogleLogin;
 import com.edu.springshop.sns.GoogleOAuthToken;
 import com.edu.springshop.sns.KaKaoLogin;
 import com.edu.springshop.sns.KakaoOAuthToken;
+import com.edu.springshop.sns.NaverLogin;
+import com.edu.springshop.sns.NaverOAuthToken;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -45,6 +48,10 @@ public class MemberController {
 	@Autowired
 	private KaKaoLogin kakaoLogin;
 	
+	@Autowired
+	private NaverLogin naverLogin;
+	
+	
 	//회원가입 폼 요청처리
 	@GetMapping("/member/joinform")
 	public ModelAndView getJoinForm(HttpServletRequest request) {
@@ -58,8 +65,6 @@ public class MemberController {
 		
 		return new ModelAndView("shop/member/loginform");
 	}
-	
-	
 	
 	//회원가입 요청 처리 
 	//HttpServletRequest를 넣어야 하는이유?  AOP적용을 위한 CategoryAdvice 코드에
@@ -123,7 +128,6 @@ public class MemberController {
 		//요청시도를 위한 객체생성, 비동기 방식의 요청을 위한 객체
 		RestTemplate restTemplate=new RestTemplate();
 		ResponseEntity<String> responseEntity= restTemplate.exchange(url, HttpMethod.POST, httpEntity, String.class); //
-		
 
 		/*--------------------------------------------------------------
 		 * 2) 토큰 요청 후 ResponseEntitu로부터 토큰 꺼내기 (String에 불과하므로)
@@ -165,8 +169,6 @@ public class MemberController {
 			  "id": "103950560430611753976",     --------------db 설계시 저장해둬야 함 -> 중복된 id인지 판단 할 수 있어야 함 
 			  "email": "dokyy1226@gmail.com",
 			  "verified_email": true,
-			  "name": "do an",
-			  "given_name": "do",
 			  "family_name": "an",
 			  "picture": "https://lh3.googleusercontent.com/a/AGNmyxZTDDHj36GZyjxpfVRdbLTsnmYRUcNxDMbLs_A1=s96-c",
 			  "locale": "en"
@@ -320,21 +322,161 @@ public class MemberController {
 			
 			
 			String id=String.valueOf(userMap.get("id"));	//내가 알고 싶어하는 정보
-
-			logger.info("id : " + id);
-
-		
+			//String id = (String)userMap.get("id");
+			//String connected_at = (String)userMap.get("connectected_at");
+			Map properties = (Map) userMap.get("properties");		//내부의 json은 맵으로 처리 
+			String nickname = (String)properties.get("nickname");
 			
+			logger.info("id : " + id);
+			logger.info("id is "+ userMap.get("id"));
+			logger.info("nickname is "+ nickname);
+		
+			/*
 			if(false) {//회원여부를 판단하세요
 			//이미 db에 이 회원의 식별 고유 id가 존재할 경우
 			//회원가입을 처리해주자 (서비스의 regist) 세션에 담자 
 			}else {
 			//그렇지 않은 경우
 			//로그인 처리만 하자(세션에 담자)
-			}
+			}*/
 			
 			ModelAndView mav = new ModelAndView("redirect:/");
 			
+			return mav;
+		}
+		
+		
+//네이버 로그인 콜백
+		@GetMapping("/sns/naver/callback")
+		public ModelAndView naverCallback(HttpServletRequest request) {
+			String code = request.getParameter("code");
+			logger.info("네이버에서 발급된 코드는 "+code); 
+			//네이버에서 발급된 코드는 mR1ZIr8CH7WnOY4ndK
+			
+			/*--------------------------------------------------------------
+			 * 1) 토큰 취득을 위한 POST 헤더와 바디 구성하기
+			 ----------------------------------------------------------------*/
+			String url = naverLogin.getToken_request_url();
+			
+			//바디(헤더)의 파라미터 구성하기 <파라미터명, 파라미터값>
+			MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>();
+			params.add("code", code);
+			params.add("client_id", naverLogin.getClient_id());
+			params.add("client_secret", naverLogin.getClient_secret());
+			params.add("redirect_uri", naverLogin.getRedirect_uri());
+			params.add("grant_type", naverLogin.getGrant_type());
+			params.add("state", naverLogin.getState());
+			
+			//post 방식의 헤더 (application/x-www-form-urlencoded)
+			HttpHeaders headers = new HttpHeaders();
+			headers.add("Content-Type",  "application/x-www-form-urlencoded"); 	//** . 아니고 - 로 구분
+			
+			//머리와 몸 합치기
+			HttpEntity httpEntity = new HttpEntity(params, headers);
+			
+			//요청시도를 위한 객체생성, 비동기 방식의 요청을 위한 객체
+			RestTemplate restTemplate=new RestTemplate();
+			ResponseEntity<String> responseEntity= restTemplate.exchange(url, HttpMethod.POST, httpEntity, String.class); //
+			
+
+			/*--------------------------------------------------------------
+			 * 2) 토큰 요청 후 ResponseEntitu로부터 토큰 꺼내기 (String에 불과하므로)
+			 ---------------------------------------------------------------*/
+			String body = responseEntity.getBody();
+			logger.info("네이버에서 넘겨받은 응답정보" + body);
+			
+			/*네이버에서 넘겨받은 응답정보 {
+			"access_token": "AAAANzDn696FMlz2-XuXZRNTxF8k4wmQtGuS8z1WxyAXr9L5xxcH-dJs09pq4qLNUAVR9zV77MJB3igFiZEEyZtc2bU",
+			"refresh_token": "f7gpCtR88haztmuZgcPtqZEje3dL0bbDs9bZk7nvNfipOIgSQuvrpL7B1ERErLU4PA8iiCxJSQssjlDPhVjDmYSF1x2u3Iza7IUjwAKMP7MjYB3djPMq08oB932LisM0hlf",
+			"token_type": "bearer",
+			"expires_in": "3600"}*/
+			
+			
+			//json으로 되어있는 문자열을 파싱하여, 자바의 객체로 옮겨담자
+			ObjectMapper objectMapper = new ObjectMapper();
+			NaverOAuthToken oAuthToken = null;
+			
+			try {
+				oAuthToken=objectMapper.readValue(body, NaverOAuthToken.class);
+				
+			} catch (JsonMappingException e) {
+				e.printStackTrace();
+			} catch (JsonProcessingException e) {
+				e.printStackTrace();
+			}
+			
+			//oAuthToken 안의 토큰을 이용하여 회원정보에 접근
+			/*--------------------------------------------------------------
+			 * 3) 토큰을 이용하여 회원정보에 접근 
+			 ----------------------------------------------------------------*/
+			String userinfo_url=naverLogin.getUserinfo_url();
+			
+			//GET방식요청 구성
+			HttpHeaders headers2 = new  HttpHeaders();
+			headers2.add("Authorization", "Bearer "+oAuthToken.getAccess_token()); //"Bearer " 한 칸 띄워야 함!!
+			HttpEntity entity=new HttpEntity(headers2);
+			
+			//비동기 객체를 이용한 GET 요청
+			RestTemplate restTemplate2 = new RestTemplate();
+			ResponseEntity <String> userEntity = restTemplate2.exchange(userinfo_url, HttpMethod.GET, entity, String.class);
+			
+			String userBody = userEntity.getBody();
+			logger.info("회원정보는 "+userBody);
+			/*회원정보는 
+			 * {
+				"resultcode": "00",
+				"message": "success",
+				"response": {
+					"id": "DgPdf0zXS5lz3Hm-Kgx6-EtXpx4MPZFithX40KQawLg",
+					"nickname": "\ub2f9\uadfc\uc2dc\ub7ec",
+					"profile_image": "https:\/\/phinf.pstatic.net\/contact\/20210427_157\/1619532053625FKw67_JPEG\/DSC01453.JPG",
+					"age": "30-39",
+					"email": "asy118@hanmail.net",
+					"name": "\uc548\ub3c4\uacbd",
+					"birthyear": "1993"
+					}
+				}*/
+			
+			HashMap<String, Object> userMap = new HashMap<String, Object>();
+			
+			//사용자 정보 추출하기
+			ObjectMapper objectMapper2 = new ObjectMapper();
+			try {
+				userMap = objectMapper2.readValue(userBody, HashMap.class);
+			} catch (JsonMappingException e) {
+				e.printStackTrace();
+			} catch (JsonProcessingException e) {
+				e.printStackTrace();
+			}
+			
+			//String id=String.valueOf(userMap.get("id"));	//내가 알고 싶어하는 정보
+			//String id = (String)userMap.get("id");
+			//String connected_at = (String)userMap.get("connectected_at");
+			Map response = (Map) userMap.get("response");		//내부의 json은 맵으로 처리 
+			String id = (String)response.get("id");
+			String nickname = (String)response.get("nickname");
+			String email = (String)response.get("email");
+			String age = (String)response.get("age");
+			
+			logger.info("id : " + id);
+			logger.info("nickname is "+ nickname);
+			logger.info("email is "+ email);
+			logger.info("age is "+ age);
+			
+			/*nickname is 당근시러
+			email is asy118@hanmail.net
+			age is 30-39*/
+		
+			/*
+			if(false) {//회원여부를 판단하세요
+			//이미 db에 이 회원의 식별 고유 id가 존재할 경우
+			//회원가입을 처리해주자 (서비스의 regist) 세션에 담자 
+			}else {
+			//그렇지 않은 경우
+			//로그인 처리만 하자(세션에 담자)
+			}*/
+			
+			ModelAndView mav = new ModelAndView("redirect:/");
 			
 			return mav;
 		}
