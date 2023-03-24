@@ -42,9 +42,9 @@ public class ProductController {
 		List<Product> productList = productService.selectAll();
 		
 		//4단계: jsp로 가져가야 하므로 결과저장 
-		ModelAndView mav = new ModelAndView("admin/product/list");
+		ModelAndView mav = new ModelAndView("admin/product/list2");
 		mav.addObject("productList", productList);
-		System.out.println("카테고리명 : "+productList.get(0).getCategory().getCategory_name());
+		//System.out.println("카테고리명 : "+productList.get(0).getCategory().getCategory_name());
 		return mav;
 	
 	}

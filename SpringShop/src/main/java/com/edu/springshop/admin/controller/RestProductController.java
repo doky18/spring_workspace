@@ -1,5 +1,7 @@
 package com.edu.springshop.admin.controller;
 
+import java.util.List;
+
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
@@ -9,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -62,6 +65,11 @@ public class RestProductController {
 		
 		ResponseEntity entity = new ResponseEntity<Message>(message, HttpStatus.OK);
 		return entity;
+	}
+	
+	@GetMapping("/product")
+	public List getList() {
+		return productService.selectAll();
 	}
 	
 	//예외처리 메세지 보내기

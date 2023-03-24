@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+//쿠키에 값 유효기간을 포함하여 넣기
+	function setCookie(cname, cvalue, exdays) {
+		const d = new Date();
+		d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+		let expires = "expires="+d.toUTCString();
+		document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+	}
+	
+//쿠키 이름으로 값 추출하기 
+	let v = getCookie("_ga");		//doky 
+	
+	function getCookie(cname) {
+		let name = cname + "=";		//검색어로 사용할 변수명 
+		console.log("검색에 사용되는 네임 값은 ",name);
+		
+		//웹전송시 보안을 위해 인코딩된 데이터가 있다면 다시 평문으로 돌려놓기 
+		let decodedCookie = decodeURIComponent(document.cookie);
+		console.log("평문으로 전환된 쿠키 값은 ", decodedCookie);
+	
+		//세미콜론 기준으로 쿠키의 데이터들 분리 
+		let ca = decodedCookie.split(';');
+		console.log("생성된 쿠키 수는 ", ca.length)
+		
+			for(let i = 0; i <ca.length; i++) {
+				let c = ca[i];
+				
+				//분리된 데이터들에 공백이 있다면 공백제거 
+				while (c.charAt(0) == ' ') {
+					c = c.substring(1);
+				}
+				
+				//검색어의 작이 되는 값 구하기 
+				if (c.indexOf(name) == 0) {
+					return c.substring(name.length, c.length);
+				}
+			} 
+		return "";
+	}
+
+</script>
+</head>
+<body>
+cookie
+</body>
+</html>
