@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="OrderSummary">
+
+	
+
+	<resultMap type="OrderSummary" id="orderSummaryMap">
+		
+		<id column="order_summary_idx" property="order_summary_idx"/>
+			<result column="order_summary_regdate" property="order_summary_regdate" />
+			
+		<association 
+			column="member_idx"
+			property="member"
+			javaType="Member"
+			select="Member.select" />
+			
+		<association 
+			column="payment_idx"
+			property="payment"
+			javaType="Payment"
+			select="Payment.select" />
+			
+		<association 
+			column="paystate_idx"
+			property="paystate"
+			javaType="PayState"
+			select="PayState.select" />
+			
+		<collection 
+			column="order_summary_idx"
+			property="orderDetailList"
+			javaType="java.util.List"
+			ofType="OrderDetail"
+			select="OrderDetail.selectByOrderSummary" />
+
+	</resultMap>
+	
+	
+	
+	<!-- 모든 주문 가져오기 -->
+	<select id="selectAll" resultMap="orderSummaryMap">
+		select * from order_summary
+	</select>
+	
+	<!-- 회원 한 명의 주문 가져오기 -->
+	 <select id="selectAllByMember" resultMap="orderSummaryMap" parameterType="Member">
+	 	select * from order_summary where member_idx=#{member_idx}
+	 </select>
+	 
+	<!-- 주문 한건 가져오기 -->
+	<select id="select" parameterType="int" resultType="OrderSummary">
+		select * from order_summary
+		where order_summary_idx = #{order_summary_idx}
+	</select>
+ 
+
+	<!-- 강사에 딸린 주문 정보 가져오기 -->
+	<select id="selectAllByTeacher" parameterType="int" resultMap="orderSummaryMap">
+		select DISTINCT s.order_summary_idx as order_summary_idx, member_idx
+		from order_summary s, order_detail d 
+		where s.order_summary_idx = d.order_summary_idx
+		and subject_idx in (
+		    select subject_idx from subject where teacher_idx=#{teacher_idx}
+		)
+
+	</select>
+	 
+	 
+	<!-- 과목명, 이름으로 검색하기 -->
+	<select id="selectAllBySubjectTitleMemberNickname" parameterType="java.util.Map" resultMap="orderSummaryMap">
+		select DISTINCT s.order_summary_idx as order_summary_idx, s.member_idx as member_idx
+		from member m, order_summary s, order_detail d 
+		where m.member_idx = s.member_idx
+		and s.order_summary_idx = d.order_summary_idx
+		and subject_idx in (
+		    select subject_idx from subject where teacher_idx=#{teacher_idx}
+		)
+		<if test='subject_idx != 0 and subject_idx != " " and subject_idx != null'>
+			and subject_idx = #{subject_idx}
+		</if>
+		<if test='member_nickname != null and member_nickname != " "'>
+			and member_nickname like '%' || #{member_nickname} || '%'
+		</if>
+
+	</select>
+	 
+	 <!--  and subject_idx = #{subject_idx} or member_nickname like '%'||#{member_nickname}||'%' -->
+	<!--
+		<if test="subject_idx != null and subject_idx != ' '">
+			and subject_idx = #{subject_idx}
+		</if>
+		<if test="member_nickname != null and member_nickname != ' '">
+			or member_nickname like '%' || #{member_nickname} || '%'
+		</if>
+		
+		 -->
+</mapper>

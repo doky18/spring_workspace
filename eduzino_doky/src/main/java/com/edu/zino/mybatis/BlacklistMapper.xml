@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Blacklist">
+
+	<!--전체 가져오기 -->
+	<select id="selectAll" resultType="Blacklist">
+		select * from blacklist order by blacklist_idx asc
+	</select>
+
+	<!--멤버idx로 블랙리스트 가져오기 -->	
+	<select id="selectByMember" parameterType="int" resultType="Member">
+		select * from blacklist where member_idx=#{member_idx}
+	</select>
+
+	<!--전체 가져오기 -->	
+	<select id="select" parameterType="int" resultType="Blacklist">
+	 	select * from blacklist where blacklist_idx=#{blacklist_idx}	
+	</select>
+	
+	<!--한 건 넣기 -->
+	<insert id="insert" parameterType="Blacklist">
+		insert into blacklist(blacklist_idx, blacklist, blacklist_memo) 
+		values(seq_blacklist.nextval, #{blacklist_idx}, #{blacklist}, #{blacklist_memo})
+	</insert>
+	
+	<!--한 건 수정하기 -->
+	<update id="update" parameterType="Blacklist">
+		update blacklist set blacklist=#{blacklist}, blacklist_memo=#{blacklist_memo}
+		where blacklist_idx=#{blacklist_idx}
+	</update>
+	
+	<!--한 건 삭제하기 -->
+	<delete id="delete" parameterType="int">
+		delete from blacklist where blacklist_idx=#{blacklist_idx} 
+	</delete>
+
+</mapper>

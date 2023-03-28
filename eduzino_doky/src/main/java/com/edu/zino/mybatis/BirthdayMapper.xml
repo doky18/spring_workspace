@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Birthday">
+
+	<!--전체 가져오기 -->
+	<select id="selectAll" resultType="Birthday">
+		select * from birthday order by birthday_idx asc
+	</select>
+
+	<!--멤버idx로 가져오기 -->	
+	<select id="selectByMember" parameterType="int" resultType="Birthday">
+		select * from birthday 
+		where member_idx=#{member_idx}
+	</select>
+
+	<!--전체 가져오기 -->	
+	<select id="select" parameterType="int" resultType="Birthday">
+	 	select * from birthday where birthday_idx=#{birthday_idx}	
+	</select>
+	
+	<!--한 건 넣기 -->
+	<insert id="insert" parameterType="Birthday">
+		insert into birthday(birthday_idx, member_idx, age) 
+		values(seq_birthday.nextval, #{member.member_idx}, #{age})
+	</insert>
+	
+	<!--한 건 수정하기 -->
+	<update id="update" parameterType="Birthday">
+		update birthday set age =#{age}
+		where birthday_idx=#{birthday_idx}
+	</update>
+	
+	<!--한 건 삭제하기 -->
+	<delete id="delete" parameterType="int">
+		delete from birthday where birthday_idx=#{birthday_idx} 
+	</delete>
+
+</mapper>

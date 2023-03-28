@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Subject">
+	
+	<resultMap type="Subject" id="subjectMap">
+		<id column="subject_idx" property="subject_idx"/>
+		<association column="teacher_idx" property="teacher"
+							javaType="Teacher" select="Teacher.select" />
+	</resultMap>
+
+	<!-- 전부 가져오기 -->
+	<select id="selectAll" resultType="Subject">
+		select * from subject
+	</select>
+	
+	<!-- 강의 한건 가져오기 -->
+	<select id="select" parameterType="int" resultType="Subject">
+		select * from subject where subject_idx = #{subject_idx}
+	</select>
+	
+	<!-- 강사의 강의 전체 가져오기 -->
+	<select id="selectAllByTeacher" parameterType="int" resultMap="subjectMap">
+		select * from subject where teacher_idx = #{teacher_idx}
+	</select>
+	
+	
+	
+
+</mapper>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="PointLog">
+	<resultMap type="PointLog" id="pointLogMap">
+		<id column="point_log_idx" property="point_log_idx"/>
+		
+		<association column="order_summary_idx" 
+							property="order_summary"
+							javaType="OrderSummary"
+							select="OrderSummary.select"/>
+	</resultMap>
+
+	<!-- 모든 포인트 내역 가져오기 -->
+	<select id="selectAll" >
+		select * from point_log where point_log_idx=#{point_log_idx}
+	</select>
+</mapper>

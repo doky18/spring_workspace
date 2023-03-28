@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Cart">
+		<!-- resultMap으로 subject, member 땡겨오기 -->
+	<resultMap type="Cart" id="cartMap">
+		<id column="cart_idx" property="cart_idx"/>
+		
+		<association column="member_idx" property="member" 
+							javaType="Member" select="Member.select"/>
+							
+		<association column="subject_idx" property="subject" 
+							javaType="Subject" select="Subject.select"/>
+	</resultMap>
+	
+	<!-- 회원의 장바구니 목록 -->
+	<select id="selectAll" resultMap="cartMap" parameterType="Member">
+		select * from cart where member_idx =#{member_idx}
+	</select>
+	
+	<!--   장바구니 등록하기  -->
+	<insert id="insert" parameterType="Cart">
+	 insert into cart (cart_idx, member_idx, subject_idx) 
+	 values (seq_cart.nextval,#{member.member_idx},#{subject.subject_idx})
+	  </insert>
+	
+		<!-- 장바구니 삭제하기 -->
+	<delete id="delete" parameterType="int">
+	 delete from Cart where cart_idx=#{cart_idx}
+ 	 </delete>
+
+	
+	
+</mapper>

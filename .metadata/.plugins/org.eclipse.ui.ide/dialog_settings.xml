@@ -25,6 +25,7 @@
 		<item key="SmartImportRootWizardPage.STORE_NESTED_PROJECTS" value="true"/>
 		<item key="SmartImportRootWizardPage.STORE_CONFIGURE_NATURES" value="true"/>
 		<list key="org.eclipse.ui.internal.wizards.datatransfer.SmartImportRootWizardPage.knownSources">
+			<item value="C:\spring_workspace\eduzino"/>
 			<item value="C:\spring_workspace\SpringShop"/>
 		</list>
 	</section>
@@ -36,9 +37,11 @@
 		<item key="WizardProjectsImportPage.STORE_HIDE_CONFLICTING_PROJECTS_ID" value="false"/>
 		<list key="WizardProjectsImportPage.STORE_DIRECTORIES">
 			<item value="C:\spring_workspace\eduzino_doky"/>
+			<item value="C:\spring_workspace\eduzino"/>
 		</list>
 		<list key="WizardProjectsImportPage.STORE_ARCHIVES">
 			<item value=""/>
+			<item value="C:\spring_workspace\Servers\Tomcat v9.0 Server at localhost-config\server.xml"/>
 		</list>
 	</section>
 </section>

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<typeAliases>
+		<!-- 관리자 -->
+		<typeAlias type="com.edu.zino.domain.Admin" alias="Admin"/>
+		<typeAlias type="com.edu.zino.domain.Grade" alias="Grade"/>
+				
+		<!-- 회원 -->
+		<typeAlias type="com.edu.zino.domain.Member" alias="Member"/>
+		<typeAlias type="com.edu.zino.domain.Teacher" alias="Teacher"/>
+		<typeAlias type="com.edu.zino.domain.MemberStatus" alias="MemberStatus"/>
+		
+		<typeAlias type="com.edu.zino.domain.Sns" alias="Sns"/>
+		<typeAlias type="com.edu.zino.domain.Birthday" alias="Birthday"/>
+		<typeAlias type="com.edu.zino.domain.ProfilePhoto" alias="ProfilePhoto"/>
+		<typeAlias type="com.edu.zino.domain.Email" alias="Email"/>
+	     
+		<typeAlias type="com.edu.zino.domain.Blacklist" alias="Blacklist"/>
+		
+		<!-- 강의 관련 -->
+		<typeAlias type="com.edu.zino.domain.Subject" alias="Subject"/>
+		
+		<!-- 결제관련 -->
+		<typeAlias type="com.edu.zino.domain.Cart" alias="Cart"/>
+		<typeAlias type="com.edu.zino.domain.Wish" alias="Wish"/>
+		<typeAlias type="com.edu.zino.domain.TopCategory" alias="TopCategory"/>
+		<typeAlias type="com.edu.zino.domain.MidCategory" alias="MidCategory"/>
+		<typeAlias type="com.edu.zino.domain.SubCategory" alias="SubCategory"/>
+		
+		<typeAlias type="com.edu.zino.domain.OrderSummary" alias="OrderSummary"/>
+		<typeAlias type="com.edu.zino.domain.OrderDetail" alias="OrderDetail"/>
+		<typeAlias type="com.edu.zino.domain.Payment" alias="Payment"/>
+		<typeAlias type="com.edu.zino.domain.Paystate" alias="PayState"/>
+		
+		<!-- 포인트 관련 -->
+		<typeAlias type="com.edu.zino.domain.PointLog" alias="PointLog"/>
+		
+		<!-- 메세지관련 -->
+		<typeAlias type="com.edu.zino.domain.Message" alias="Message"/>
+		<typeAlias type="com.edu.zino.domain.Chat" alias="Chat"/>
+		
+		<!-- 관리자 게시판 관련 -->
+		<typeAlias type="com.edu.zino.domain.Adminboard" alias="Adminboard"/>
+		<typeAlias type="com.edu.zino.domain.Grade" alias="Grade"/>
+		<typeAlias type="com.edu.zino.domain.Target" alias="Target"/>
+		
+	</typeAliases>
+	
+	<mappers>
+		<mapper resource="com/edu/zino/mybatis/TopCategoryMapper.xml"/>
+		<mapper resource="com/edu/zino/mybatis/MidCategoryMapper.xml"/>
+		<mapper resource="com/edu/zino/mybatis/SubCategoryMapper.xml"/>
+		
+		<!-- 관리자 -->
+		<mapper resource="com/edu/zino/mybatis/AdminMapper.xml"/>
+		<mapper resource="com/edu/zino/mybatis/GradeMapper.xml"/>
+		
+		<!-- 회원 -->
+		<mapper resource="com/edu/zino/mybatis/TeacherMapper.xml"/>
+		<mapper resource="com/edu/zino/mybatis/MemberMapper.xml"/>
+		<mapper resource="com/edu/zino/mybatis/MemberStatusMapper.xml"/>
+		
+		<mapper resource="com/edu/zino/mybatis/BirthdayMapper.xml"/>
+		<mapper resource="com/edu/zino/mybatis/EmailMapper.xml"/>
+		<mapper resource="com/edu/zino/mybatis/ProfilePhotoMapper.xml"/>
+		<mapper resource="com/edu/zino/mybatis/SnsMapper.xml"/>
+		
+		<mapper resource="com/edu/zino/mybatis/BlacklistMapper.xml"/>
+		
+		<!-- 강의 -->
+		<mapper resource="com/edu/zino/mybatis/SubjectMapper.xml"/>
+
+		<!-- 장바구니 결제 -->
+		<mapper resource="com/edu/zino/mybatis/CartMapper.xml"/>
+		<mapper resource="com/edu/zino/mybatis/WishMapper.xml"/>
+
+		<mapper resource="com/edu/zino/mybatis/OrderSummaryMapper.xml"/>
+		<mapper resource="com/edu/zino/mybatis/OrderDetailMapper.xml"/>
+		<mapper resource="com/edu/zino/mybatis/PaymentMapper.xml"/>
+		<mapper resource="com/edu/zino/mybatis/PayStateMapper.xml"/>
+		<mapper resource="com/edu/zino/mybatis/PointLogMapper.xml"/>
+		
+		<!-- 채팅 -->
+		<mapper resource="com/edu/zino/mybatis/MessageMapper.xml"/>
+		<mapper resource="com/edu/zino/mybatis/ChatMapper.xml"/>
+		
+		
+		<mapper resource="com/edu/zino/mybatis/TargetMapper.xml"/>
+	</mappers>
+</configuration>

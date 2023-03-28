@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Sns">
+
+	<!--sns_idx로 가져오기 -->	
+	<select id="selectByIdx" parameterType="int" resultType="Sns">
+		select * from sns where sns_idx=#{sns_idx}
+	</select>
+
+	<!-- sns_type으로 가져오기 -->	
+	<select id="selectByType" parameterType="String" resultType="Sns">
+	 	select * from sns where sns_type=#{sns_type}	
+	</select>
+
+
+</mapper>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Admin">
+	
+	<resultMap type="admin" id="adminMap">
+		<id 		column="admin_idx" 			property="admin_idx"/>
+		<result  column="admin_id" 			property="admin_id"/>
+		<result  column="admin_pass" 		property="admin_pass"/>
+		
+		<!-- 부모인 grade association -->
+		<association 
+						column="grade_idx"
+						property="grade"
+						javaType="Grade"
+						select="Grade.select"/>
+	
+	</resultMap>
+
+	<select id="selectAll" resultMap="adminMap">
+		select * from admin order by admin_idx asc
+	</select>
+	
+	<select id="select" resultMap="adminMap" parameterType="int">
+		select * from admin where admin_idx=#{admin_idx}
+	</select>
+	
+	<insert id="insert" parameterType="Admin">
+		insert into admin(admin_idx, admin_id, admin_pass,admin_name, grade_idx)
+		values(seq_admin.nextval, #{admin_id},#{admin_pass},#{admin_name},#{grade.grade_idx})
+		
+		<selectKey  
+				order="AFTER"/>
+		
+	</insert>
+	
+	<update id="update" parameterType="Admin">
+		update admin set admin_id=#{admin_id}, admin_pass=#{admin_pass}, admin_name=#{admin_name}, grade_idx=#{grade.grade_idx}
+		where admin_idx=#{admin_idx}
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		delete form admin where admin_idx=#{admin_idx}
+	</delete>
+	
+</mapper>

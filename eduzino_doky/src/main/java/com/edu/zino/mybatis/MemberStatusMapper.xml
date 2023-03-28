@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="MemberStatus">
+	<!--멤버idx로 가져오기 -->	
+	<select id="selectByMember" parameterType="int" resultType="MemberStatus">
+		select * from MemberStatus where member_idx=#{member_idx}
+	</select>
+
+	<!--전체 가져오기 -->	
+	<select id="selectByStatus" parameterType="int" resultType="MemberStatus">
+	 	select * from MemberStatus where memberstatus_detail=#{memberstatus_detail}	
+	</select>
+
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+
+	<!--한 건 삭제하기 -->
+	<delete id="delete" parameterType="int">
+		delete from teacher where memberstatus_idx=#{memberstatus_idx} 
+	</delete>
+
+</mapper>

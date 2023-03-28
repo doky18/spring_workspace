@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Target">
+
+	<select id="selectAll" resultType="Target">
+		select * from target order by target_idx asc
+	</select>
+	
+	<select id="select" parameterType="int" resultType="Target">
+		select * from target where target_idx=#{target_idx}
+	</select>
+	
+	<insert id="insert" parameterType="Target">
+		insert into target(userType) values(seq_target.nextval, #{userType})
+	</insert>
+	
+	<update id="update" parameterType="Target">
+		update target set userType=#{userType} where target_idx=#{target_idx}
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		delete form target where target_idx=#{target_idx}
+	</delete>
+	
+</mapper>

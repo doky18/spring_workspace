@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="OrderDetail">
+	
+	<resultMap type="OrderDetail" id="orderDetailMap">
+		<id column="order_detail_idx" property="order_detail_idx"/>
+		<association column="subject_idx" property="subject"
+							javaType="Subject" select="Subject.select" />
+	</resultMap>
+
+	
+	<!-- 주문내역을 통해 한건 가져오기 -->
+	<select id="selectByOrderSummary" parameterType="int" resultMap="orderDetailMap">
+		select * from order_detail
+		where order_summary_idx=#{order_summary_idx}
+	</select>
+	
+
+	
+</mapper>

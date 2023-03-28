@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Chat">
+
+<resultMap type="Chat" id="chatMap">
+	<id column="chat_idx" property="chat_idx"/>
+	<result column="chat_regdate" property="chat_regdate" />
+	
+	<!-- 수강생 -->
+	<association 
+	column="member_idx"
+	property="member"
+	javaType="Member"
+	select="Member.select" />
+
+	<!-- 강사 -->
+	<association 
+	column="member_idx"
+	property="member_teacher"
+	javaType="Member"
+	select="Member.select" />
+	
+	<!-- messageMapper에서 채팅내용 가져오기 -->
+
+	
+	</resultMap>
+	
+	<select id="selectAll" resultType="Chat">
+		select * from chat
+	</select>
+	
+	<!-- 수강생과 강사 하나의 채팅방 idx조회 -->
+	<select id="select" parameterType="Chat" resultType="Chat">
+		select chat_idx from chat
+		where member_idx=#{member.member_idx}
+		and member_teacher_idx=#{member_teacher.member_idx}
+	</select>
+	
+	<!-- 수강생한명 채팅방전체 조회하기 -->
+	<select id="selectByStudent" parameterType="int" resultMap="chatMap">
+		select * from chat where member_idx=#{member.member_idx}
+	</select>
+
+	<!-- 강사한명 채팅방전체 조회하기 -->
+	<select id="selectByTeacher" parameterType="int" resultMap="chatMap">
+		select * from chat where member_teacher_idx=#{member_teacher.member_idx}
+	</select>
+	 
+	<insert id="insert" parameterType="Chat">
+		insert into chat(chat_idx, member_idx, member_teacher_idx)
+		values(seq_chat.nextval, #{member.member_idx}, #{member_teacher.member_idx})
+	</insert>
+	
+	<delete id="delete" parameterType="int">
+			delete from chat where chat_idx=#{chat_idx}
+	</delete>
+
+
+</mapper>

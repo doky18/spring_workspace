@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Email">
+
+	<!--전체 가져오기 -->
+	<select id="selectAll" resultType="Email">
+		select * from email order by email_idx asc
+	</select>
+
+	<!--멤버idx로 가져오기 -->	
+	<select id="selectByMember" parameterType="int" resultType="Email">
+		select * from email where member_idx=#{member_idx}
+	</select>
+
+	<!--전체 가져오기 -->	
+	<select id="select" parameterType="int" resultType="Email">
+	 	select * from email where email_idx=#{email_idx}	
+	</select>
+	
+	<!--한 건 넣기 -->
+	<insert id="insert" parameterType="Email">
+		insert into email( email_idx, member_idx, email_addr) values(seq_email.nextval,#{member.member_idx},  #{email_addr})
+	</insert>
+	
+	<!--한 건 수정하기 -->
+	<update id="update" parameterType="Email">
+		update email set email_addr =#{email_addr}
+		where email_idx=#{email_idx}
+	</update>
+	
+	<!--한 건 삭제하기 -->
+	<delete id="delete" parameterType="int">
+		delete from email where email_idx=#{email_idx} 
+	</delete>
+
+</mapper>

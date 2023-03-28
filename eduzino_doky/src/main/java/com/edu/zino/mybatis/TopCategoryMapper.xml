@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="TopCategory">
+
+	<resultMap type="TopCategory" id="TopCategoryMap">
+		<id column="top_category_idx" property="top_category_idx"/>
+		<result column="top_name" property="top_name"/>
+		<collection property="midCategoryList" column="top_category_idx" javaType="java.util.ArrayList"
+		ofType="MidCategory" select="MidCategory.selectAllByTopCategory" />
+	</resultMap>
+	
+	<select id="selectAll" resultMap="TopCategoryMap">
+		select * from top_category order by top_category_idx
+	</select>
+	
+</mapper>

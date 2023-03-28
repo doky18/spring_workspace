@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Member">
+	
+	<!-- 강사 테이블 조회 맵 -->
+	<resultMap type="Member" id="memberTeacherMap">
+	<id column="member_idx" property="member_idx"/>
+	<result column="member_nickname" property="member_nickname" />
+	<result column="member_id"	property="member_id"/>
+	<result column="member_regdate" property="member_regdate"/>
+	
+	<!-- 강사인지 아닌지 조회하기 -->
+	<association 
+	column="teacher_idx"
+	property="teacher"
+	javaType="Teacher"
+	select="Teacher.select" 
+	/>
+	</resultMap>
+	
+	<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+	 
+	<!-- member_idx로 가져올 정보들 -->
+	<resultMap type="Member" id="membermap"> 
+		<id 	column="member_idx"		property="member_idx"/>
+		<result column="member_nickname"	property="member_nickname"/>
+		<result column="member_id"		property="member_id"/>
+		<result column="member_regdate" 	property="member_regdate"/>
+	
+	
+	<!-- 부모) SNS 로그인 방식 -->
+	<association
+		column="sns_idx"
+		property="sns"
+		javaType="Sns"
+		select="Sns.selectByIdx"/>
+	
+	<!-- 자식) Birthday -->
+	<collection 
+		column="member_idx"
+		property="birthday"
+		javaType="String"
+		ofType="Birthday"
+		select="Birthday.selectByMember"/>
+		
+	<!-- 자식) Email -->	
+	<collection  
+		column="member_idx"
+		property="email"
+		javaType="String"
+		ofType="Email"
+		select="Email.selectByMember"/>
+		
+	<!-- 자식) ProfilePhoto -->	
+	<collection  
+		column="member_idx"
+		property="profilePhoto"
+		javaType="String"
+		ofType="ProfilePhoto"
+		select="ProfilePhoto.selectByMember"/>
+
+	<!-- 자식) 선생님 
+	<collection
+		column="member_idx"
+		property="teacher"
+		javaType="teacher"
+		ofType="Teacher"
+		select="Teacher.selectByTeacher"/>-->
+		
+	<!-- 자식) 블랙리스트 
+	<collection
+		column="member_idx"
+		property="blacklist"
+		javaType="blacklist"
+		ofType="Blacklist"
+		select="Blacklist.selectByMember"/>-->
+	
+</resultMap>
+
+	<!-- 전부 가져오기 -->
+	<select id="selectAll" resultMap="membermap">
+		select * from member order by member_idx asc
+	</select>
+	
+	
+	<!-- 학생 한명 가져오기 -->
+	<select id="select" resultMap="memberTeacherMap" parameterType="int">
+		select * from member
+		where member_idx = #{member_idx}
+	</select>
+	
+	<!-- 고유 id를 통한 회원조회 -->
+	<select id="selectById" resultType="Member" parameterType="String">
+		select * from member
+		where member_id = #{member_id}
+	</select>
+		
+	<!-- 회원가입 등록 -->
+	<insert id="insert" parameterType="Member">
+		insert into member(member_idx, member_id, sns_idx, member_nickname) 
+		values (seq_member.nextval, #{member_id}, #{sns.sns_idx}, #{member_nickname})
+		
+	<!-- insert하자마자 방금 넣은 그 값 좀 줄래? 출생신고하자마자 서류뽑기 / 또 증가 시키기 위함이 아니라서 currval-->
+		<selectKey
+			keyColumn="member_idx"
+			keyProperty="member_idx"
+			order="AFTER"
+			resultType="int">
+			select seq_member.currval as member_idx from dual
+		</selectKey> 
+	</insert>
+	
+	<!-- 수정하기-->
+	<update id="update" parameterType="Member">
+		update member set 
+		, member_nickname=#{member_nickname}
+		, member_id=#{member_id}
+		where member_idx=#{member_idx} 	
+	</update>
+	
+	<!-- 삭제하기: 활성/ 비활성화로 -->
+	<delete id="delete" parameterType="int">
+		delete from member where member_id=#{member_id}
+	</delete>
+</mapper>

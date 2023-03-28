@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Grade">
+
+	<select id="selectAll" resultType="Grade">
+		select * from grade order by grade_idx asc
+	</select>
+	
+	<select id="select" parameterType="int" resultType="Grade">
+	 	select * from grade where grade_idx=#{grade_idx}	
+	</select>
+	
+	<insert id="insert" parameterType="Grade">
+		insert into grade(grade_rank) values(seq_grade.nextval, #{grade_rank})
+	</insert>
+	
+	<update id="update" parameterType="Grade">
+		update grade set grade_rank=#{grade_rank}
+		where grade_idx=#{grade_idx}
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		delete from grade where grade_rank=#{grade_rank} 
+	</delete>
+
+</mapper>

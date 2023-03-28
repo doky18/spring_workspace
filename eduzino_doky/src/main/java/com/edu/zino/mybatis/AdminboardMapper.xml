@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Adminboard">
+
+	<resultMap type="Adminboard" id="AdminboardMap">
+		<id column="adminboard_idx" property="adminboard_idx" />
+		<result column="adminboard_title" property="adminboard_title" />
+		<result column="adminboard_content"
+			property="adminboard_content" />
+		<result column="adminboard_regdate"
+			property="adminboard_regdate" />
+		<result column="adminboard_sort" property="adminboard_sort" />
+
+		<!-- 부모인 target와 association -->
+		<association column="target_idx" property="target"
+			javaType="Target" select="Target.select" />
+
+		<!-- 부모인 admin과 association -->
+		<association column="admin_idx" property="admin"
+			javaType="Admin" select="Admin.select" />
+
+	</resultMap>
+
+	<!-- 레코드 가져오기 -->
+	<select id="selectAll" resultMap="AdminboardMap">
+		select * from adminboard order
+		by adminboard_idx asc
+	</select>
+
+	<select id="select" resultMap="AdminboardMap" parameterType="int">
+		select * from adminboard where adminboard_idx=#{adminboard_idx}
+	</select>
+
+	<insert id="insert" parameterType="Adminboard">
+		insert into adminboard(adminboard_idx, adminboard_title,adminboard_content, adminboard_regdate, adminboard_sort, target_idx, admin_idx)
+		values(seq_adminboard.nextval, #{adminboard_title}, #{adminboard_content},sysdate, #{adminboard_sort}, #{target.target_idx}, #{admin.admin_idx})
+		
+	</insert>
+
+	<update id="update" parameterType="Adminboard">
+		update adminboard set adminboard_title=#{adminboard_title}, adminboard_content=#{adminboard_content}, adminboard_sort=#{adminboard_sort}, target_idx=#{target.target_idx},admin_idx=#{admin.admin_idx} 
+		where adminboard_idx=#{adminboard_idx}
+	</update>
+
+	<delete id="delete" parameterType="int">
+		delete from adminboard where
+		adminboard_idx=#{adminboard_idx}
+	</delete>
+
+</mapper>
