@@ -28,37 +28,43 @@
 		<result column="member_regdate" 	property="member_regdate"/>
 	
 	
-	<!-- 부모) SNS 로그인 방식 -->
+	<!-- 부모) SNS 로그인 방식 1:1-->
 	<association
 		column="sns_idx"
 		property="sns"
 		javaType="Sns"
 		select="Sns.selectByIdx"/>
 	
-	<!-- 자식) Birthday -->
-	<collection 
+	<!-- 자식) Birthday 1:다 -->
+	<association 
 		column="member_idx"
 		property="birthday"
-		javaType="String"
-		ofType="Birthday"
+		javaType="Birthday"
 		select="Birthday.selectByMember"/>
 		
 	<!-- 자식) Email -->	
-	<collection  
-		column="member_idx"
-		property="email"
-		javaType="String"
-		ofType="Email"
-		select="Email.selectByMember"/>
+	<association 
+        column="member_idx"
+        property="email"
+        javaType="Email"
+        select="Email.selectByMember"/>
+
 		
 	<!-- 자식) ProfilePhoto -->	
-	<collection  
+	<association  
 		column="member_idx"
 		property="profilePhoto"
-		javaType="String"
-		ofType="ProfilePhoto"
+		javaType="ProfilePhoto"
 		select="ProfilePhoto.selectByMember"/>
 
+	<!-- 자식) 블랙리스트 
+	<collection
+		column="member_idx"
+		property="blacklist"
+		javaType="String"
+		ofType="Blacklist"
+		select="Blacklist.selectByMember"/> -->
+		
 	<!-- 자식) 선생님 
 	<collection
 		column="member_idx"
@@ -66,14 +72,6 @@
 		javaType="teacher"
 		ofType="Teacher"
 		select="Teacher.selectByTeacher"/>-->
-		
-	<!-- 자식) 블랙리스트 
-	<collection
-		column="member_idx"
-		property="blacklist"
-		javaType="blacklist"
-		ofType="Blacklist"
-		select="Blacklist.selectByMember"/>-->
 	
 </resultMap>
 
@@ -82,8 +80,14 @@
 		select * from member order by member_idx asc
 	</select>
 	
+	<!--  학생 한명 가져오기 -->
+	<select id="selectMember" resultMap="membermap" parameterType="int">
+		select * from member
+		where member_idx = #{member_idx}
+	</select>
 	
-	<!-- 학생 한명 가져오기 -->
+	
+	<!--  강사로 학생 한명 가져오기 -->
 	<select id="select" resultMap="memberTeacherMap" parameterType="int">
 		select * from member
 		where member_idx = #{member_idx}

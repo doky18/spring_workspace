@@ -19,6 +19,12 @@ public class MybatisMemberDAO implements MemberDAO{
 	public List selectAll() {
 		return sqlSessionTemplate.selectList("Member.selectAll");
 	}
+	
+	@Override
+	public Member selectMember(int member_idx) {
+		return sqlSessionTemplate.selectOne("Member.selectMember", member_idx);
+	}
+	
 
 	@Override
 	public Member select(int member_idx) {
@@ -56,5 +62,6 @@ public class MybatisMemberDAO implements MemberDAO{
 		Member result=sqlSessionTemplate.selectOne("Member.selectById", id);
 		return result;
 	}
-	
+
+
 }

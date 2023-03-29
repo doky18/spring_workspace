@@ -13,4 +13,5 @@
 <link rel="stylesheet" href="/resources/admin/assets/css/demo_1/style.css" />
 <!-- End layout styles -->
 <link rel="shortcut icon" href="/resources/admin/assets/images/favicon.png" />
+<!-- vue -->
 <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>

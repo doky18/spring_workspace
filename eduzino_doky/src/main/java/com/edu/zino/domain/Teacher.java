@@ -5,4 +5,6 @@ import lombok.Data;
 @Data
 public class Teacher extends Member{
 	private int teacher_idx;//강사번호
+	
+	private Member member;
 }

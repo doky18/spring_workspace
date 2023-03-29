@@ -41,10 +41,15 @@ public class MemberServiceImpl implements MemberService{
 		// TODO Auto-generated method stub
 		return memberDAO.selectAll();
 	}
+	
+	@Override
+	public Member selectMember(int member_idx) {
+		return memberDAO.selectMember(member_idx);
+	}
+
 
 	@Override
 	public Member select(int member_idx) {
-		// TODO Auto-generated method stub
 		return memberDAO.select(member_idx);
 	}
 
@@ -98,7 +103,6 @@ public class MemberServiceImpl implements MemberService{
 		// TODO Auto-generated method stub
 		
 	}
-
 	
 	
 }

@@ -1,4 +1,12 @@
-<%@ page contentType="text/html;charset=UTF-8"%>
+<%@page import="com.edu.zino.domain.Member" %>
+<%@page import="com.edu.zino.domain.Email" %>
+<%@page import="com.edu.zino.domain.Birthday" %>
+<%@page import="com.edu.zino.domain.ProfilePhoto" %>
+<%@page import="java.util.List"%>
+<%@ page contentType="text/html;charset=UTF-8" %>
+<% 
+	List<Member> memberList=(List)session.getAttribute("memberList");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -93,5 +101,65 @@
     <!-- plugins:js end -->
     <!-- End custom js for this page -->
   </body>
+<script type="text/javascript">
+let app1;
+const row={
+	template:`
+	<tr>
+		<td class="py-1">
+			<img src="../../assets/images/faces-clipart/pic-1.png" alt="image">
+		</td>
+		<td><a href="/admin/member/blackdetail"> Herman Beck</a></td>
+		<td>doky@eduzino.com</td>
+		<td>비방, 욕설</td>
+		<td> 23-03-23</td>
+	</tr>
+	`, 
+	props:['member'],
+	data(){
+		return {
+			obj:this.member
+			
+		};	
+		
+	}, 
+	methods:{
+		getDetail:function(member_idx){
+			alert(member_idx);
+			location.href="/admin/member/detail?member_idx="+member_idx;
+		}
+	}
+};
 
+
+//목록가져오기 
+function getList(){
+	$.ajax({
+		url:"/admin/rest/member",
+		type:"get",
+		success:function(result, status, xhr){
+			console.log("서버에서 전송된 결과 : ", result);
+			app1.memberList=result;
+		}
+	});	
+}
+
+function init(){
+	app1=new Vue({
+		el:"#app1", 
+		components:{
+			row
+		},
+		data:{
+			memberList:[]
+		}
+	});
+}
+
+
+$(function () {
+	init();
+	getList();
+});
+</script>
 </html>

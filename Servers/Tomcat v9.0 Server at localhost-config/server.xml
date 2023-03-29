@@ -39,7 +39,16 @@
     <Resource auth="Container" driverClassName="oracle.jdbc.driver.OracleDriver" maxActive="20" maxIdle="10" maxWait="3000" name="jdbc/oracle" password="1234" type="javax.sql.DataSource" url="jdbc:oracle:thin:@localhost:1521:xe" username="edu"/>
     
     <!-- AWS -->	
-    <Resource auth="Container" driverClassName="oracle.jdbc.driver.OracleDriver" maxActive="20" maxIdle="10" maxWait="3000" name="jdbc/aws" password="1234" type="javax.sql.DataSource" url="jdbc:oracle:thin:@15.165.203.187:1521:xe" username="eduzino"/>
+    <Resource auth="Container" 
+    driverClassName="oracle.jdbc.driver.OracleDriver" 
+    maxActive="20" 
+    maxIdle="10" 
+    maxWait="3000" 
+    name="jdbc/aws" 
+    password="1234" 
+    type="javax.sql.DataSource" 
+    url="jdbc:oracle:thin:@15.165.203.187:1521:xe" 
+    username="eduzino"/>
 	    
     	
     <Resource auth="Container" driverClassName="com.mysql.jdbc.Driver" maxActive="20" maxIdle="10" maxWait="3000" name="jdbc/mysql" password="1234" type="javax.sql.DataSource" url="jdbc:mysql://localhost:3306/jspshop?characterEncoding=utf8" username="root"/>

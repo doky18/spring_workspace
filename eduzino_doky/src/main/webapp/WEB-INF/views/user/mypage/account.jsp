@@ -1,4 +1,9 @@
-<%@ page contentType="text/html;charset=UTF-8"%>
+<%@page import="com.edu.zino.domain.Member"%>
+<%@ page contentType="text/html;charset=UTF-8" %>
+<%
+	Member member = (Member)session.getAttribute("member");
+	out.print(member);
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -32,17 +37,17 @@
 				<jsp:include page="../inc/mypage/sidebar.jsp"></jsp:include>
 				 <!-- sidebar.html end  -->
 			</div>
+		<!-- *********************회원 정보 시작************************** -->
 			<div class="col-md-9 mt-5">
-			
-			
 			<div class="card">
             <div class="card-body">
                 <form class="forms-sample">
                     <div class="form-group row">
-                        <div class="profile_photo">
-							<img id="imgThumb" src="https://phinf.pstatic.net/contact/20210427_157/1619532053625FKw67_JPEG/DSC01453.JPG?type=s160" width="200" height="200">
+                        <div class="profile_photo col-sm-5">
+							<img id="imgThumb" src="<%=member.getProfilePhoto().getProfile_photo() %>" width="200" height="200">
 							<span class="mask"></span>
                         </div>
+                        
 			            <div class="form-group">
 			                <label>File upload</label>
 			                <input type="file" name="img[]" class="file-upload-default">
@@ -53,35 +58,33 @@
 			                    </span>
 			                </div>
 			            </div>
+			            
                     </div>
-                    
-                    
                     <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">닉네임</label>
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control" id="nickname" placeholder="nickname">
-                        </div>
-                    </div>
-                    
-                    <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">연령 </label>
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control" id="age" placeholder="Age">
+                        <label class="col-sm-2 col-form-label">닉네임 :  </label>
+                        <div class="col-sm-9">
+                            <input type="text"class="form-control" name="nickname" value="<%=member.getMember_nickname() %>" >
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">가입일</label>
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control" id="regdate" placeholder="Regdate">
+                        <label class="col-sm-2 col-form-label">이메일 :  </label>
+                        <div class="col-sm-9">
+                            <input type="email" readonly class="form-control-plaintext" name="email" value="<%=member.getEmail().getEmail_addr()%>">
                         </div>
                     </div>
-<!-- * * * * * * * * * * * * * * * * * * * * * * * *  -->
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">가입형태 : </label>
+                        <div class="col-sm-9">
+                            <input type="text" readonly class="form-control-plaintext" name="age" value="<%=member.getSns().getSns_type()%>">
+                        </div>
+                    </div>
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * 
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">회원상태</label>
                         <div class="col-sm-4">
                             <input type="text" class="form-control" id="status" placeholder="회원상태">
                         </div>
-                    </div>
+                    </div>  -->
 <!-- * * * * * * * * * * * * * * * * * * * * * * * *  -->
                    
                     <div class="flex-wrap">
@@ -95,7 +98,7 @@
                 </form>
             </div>
         </div>
-			    
+
 			    
 			</div>
 		</div>	
@@ -114,4 +117,32 @@
 	<!-- footer_link end-->
 
 </body>
+<script type="text/javascript">
+$(function(){
+	//회원정보 수정하기 
+	 $("#bt_regist").click(function(){
+		 if(confirm("해당 닉네임으로 수정하시겠어요?")){
+			$("#form1").attr({
+				 //action:"/admin/member/{blacklist_idx}",
+				 method:"post"		
+			 });
+			 $("#form1").submit();	
+		}	
+	 });
+	 
+	//계정삭제하기
+	 $("#bt_toteacher").click(function() {
+			if(confirm("계정을 삭제하시겠습니까?")){
+				$("#form1").attr({
+					action:"/admin/member/{blacklist_idx}",
+					 method:"put"		
+				 });
+				 $("#form1").submit();	
+			}
+	});
+
+});
+
+</script>
+
 </html>

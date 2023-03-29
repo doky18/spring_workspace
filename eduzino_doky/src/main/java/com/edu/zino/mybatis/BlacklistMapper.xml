@@ -19,8 +19,8 @@
 	
 	<!--한 건 넣기 -->
 	<insert id="insert" parameterType="Blacklist">
-		insert into blacklist(blacklist_idx, blacklist, blacklist_memo) 
-		values(seq_blacklist.nextval, #{blacklist_idx}, #{blacklist}, #{blacklist_memo})
+		insert into blacklist(blacklist_idx, member_idx,, blacklist_memo) 
+		values(seq_blacklist.nextval, #{blacklist_idx}, #{member.member_idx}, #{blacklist_memo})
 	</insert>
 	
 	<!--한 건 수정하기 -->
