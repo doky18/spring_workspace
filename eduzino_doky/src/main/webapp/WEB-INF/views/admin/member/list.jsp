@@ -105,7 +105,7 @@ const row={
 	template:`
 	 <tr>
         <td class="py-1">
-            <img :src=" 'getDetail(obj.getProfilePhoto().getProfile_photo()) ' " alt="image">
+            <img :src="obj.getProfilePhoto().getProfile_photo()" alt="image">
         </td>
         <td @click="getDetail(obj.member_idx)"><a href="#">{{obj.member_nickname}}</a></td>
         <td>{{obj.sns.sns_type}}</td>
@@ -118,9 +118,7 @@ const row={
 	props:['member'],
 	data(){
 		return {
-			obj:this.member
-			pic:this.
-			
+			obj:this.member,
 		};	
 		
 	}, 
@@ -131,6 +129,7 @@ const row={
 		}
 	}
 };
+
 
 
 //목록가져오기 
