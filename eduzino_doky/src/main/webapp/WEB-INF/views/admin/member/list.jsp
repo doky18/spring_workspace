@@ -111,7 +111,7 @@ const row={
         <td>{{obj.sns.sns_type}}</td>
         <td>{{obj.email.email_addr}}</td>
         <td>
-            <label class="badge badge-info">일반회원</label>
+            <label class="badge badge-info">활동회원</label>
         </td>
     </tr>
 	`, 
